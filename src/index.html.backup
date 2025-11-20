@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitSpark 健身教学平台</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/friends-leaderboard.css" />
+    <link rel="stylesheet" href="assets/css/analytics.css" />
+    <link rel="stylesheet" href="assets/css/forum.css" />
+    <link rel="stylesheet" href="assets/css/share-card.css" />
+    <link rel="stylesheet" href="assets/css/activity-feed.css" />
+    <link rel="stylesheet" href="assets/css/health-report.css" />
+    <link rel="stylesheet" href="assets/css/oauth.css" />
+    <link rel="stylesheet" href="assets/css/calendar.css" />
+    <link rel="stylesheet" href="assets/css/socialShare.css" />
+    <link rel="stylesheet" href="assets/css/user-profile.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="logo">FitSpark</div>
+        <nav class="main-nav">
+          <a href="#auth">登录/注册</a>
+          <a href="#user-profile">个人资料</a>
+          <a href="#profile">身体数据</a>
+          <a href="#workouts">训练课程</a>
+          <a href="#nutrition">营养日志</a>
+          <a href="#analytics">数据分析</a>
+          <a href="#friends">好友</a>
+          <a href="#activity-feed">动态</a>
+          <a href="#leaderboard">排行榜</a>
+          <a href="#calendar">日历</a>
+          <a href="#forum">论坛</a>
+          <a href="#roadmap">Roadmap</a>
+        </nav>
+        <button class="btn primary" data-open="auth-modal">开始体验</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">健身爱好者教学网站</p>
+            <h1>用数据与教学驱动每一步训练</h1>
+            <p>
+              BMI 计算、训练与营养跟踪于一体的 Web 平台，帮助你构建完整的健身计划。
+            </p>
+            <div class="hero-cta">
+              <button class="btn primary" data-open="auth-modal">立即注册</button>
+              <button class="btn ghost" data-scroll="#roadmap">查看规划</button>
+            </div>
+            <ul class="hero-stats">
+              <li>
+                <span>4</span>
+                核心模块
+              </li>
+              <li>
+                <span>12+</span>
+                计划模板
+              </li>
+              <li>
+                <span>24/7</span>
+                训练指导
+              </li>
+            </ul>
+          </div>
+          <div class="hero-visual">
+            <div class="glass-card">
+              <h3>今日进度</h3>
+              <p>燃脂组 · 45min</p>
+              <div class="progress">
+                <div class="progress-bar" style="width: 68%"></div>
+              </div>
+              <ul>
+                <li><strong>BMI</strong><span data-bind="bmiValue">--</span></li>
+                <li><strong>热量</strong><span>1280 kcal</span></li>
+                <li><strong>连续签到</strong><span>5 天</span></li>
+              </ul>
+            </div>
+            <div class="glass-card secondary">
+              <h4>接下来</h4>
+              <p>胸背力量 · 30 min</p>
+              <p class="muted">包含 6 个动作 · 中等强度</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="auth">
+        <div class="container two-column">
+          <div>
+            <h2>基础登录注册</h2>
+            <p>
+              轻量身份模块，包含邮箱/手机号注册、密码强度检测与会话保持。
+            </p>
+            <ul class="checklist">
+              <li>本地存储用户档案并模拟会话</li>
+              <li>密码强度提示、重复邮箱检测</li>
+              <li>提供“忘记密码”流程占位（未来接邮件）</li>
+            </ul>
+          </div>
+          <div class="auth-card" id="auth-panel"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="user-profile">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">我的账户</p>
+              <h2>个人资料</h2>
+              <p>查看你的训练数据、成就和账户设置。</p>
+            </div>
+          </div>
+          <div id="user-profile-container"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="profile">
+        <div class="container two-column">
+          <div class="profile-card" data-guard="profile">
+            <div class="guard-message" hidden>
+              <p>需要登录后才能编辑资料。</p>
+              <button class="btn primary" data-open="auth-modal">立即登录</button>
+            </div>
+            <form id="profile-form">
+              <div class="form-row">
+                <label>昵称<input name="nickname" required /></label>
+                <label>性别
+                  <select name="gender">
+                    <option value="">选择</option>
+                    <option value="female">女</option>
+                    <option value="male">男</option>
+                    <option value="other">其他</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>年龄
+                  <input type="number" name="age" min="10" max="80" />
+                </label>
+                <label>训练偏好
+                  <select name="preference">
+                    <option value="">选择</option>
+                    <option value="hiit">HIIT</option>
+                    <option value="strength">力量训练</option>
+                    <option value="cardio">心肺</option>
+                    <option value="mobility">灵活性</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>身高 (cm)
+                  <input type="number" name="height" min="100" max="250" required />
+                </label>
+                <label>体重 (kg)
+                  <input type="number" name="weight" min="30" max="200" required />
+                </label>
+              </div>
+              <div class="form-row">
+                <label>目标体重 (kg)
+                  <input type="number" name="targetWeight" />
+                </label>
+                <label>本周目标 (kg)
+                  <input type="number" name="weeklyTarget" step="0.1" />
+                </label>
+              </div>
+              <div class="form-row">
+                <label>训练目标
+                  <select name="goal">
+                    <option value="fat_loss">减脂</option>
+                    <option value="muscle_gain">增肌</option>
+                    <option value="keep_fit">保持健康</option>
+                  </select>
+                </label>
+                <label>每周频次
+                  <input type="number" name="frequency" min="1" max="7" />
+                </label>
+              </div>
+              <label>个人简介
+                <textarea name="bio" rows="2" placeholder="描述你的训练喜好"></textarea>
+              </label>
+              <label>患病史 / 注意事项
+                <textarea name="medicalHistory" rows="2" placeholder="例如心率异常、关节损伤等"></textarea>
+              </label>
+              <button class="btn primary" type="submit">保存资料</button>
+            </form>
+          </div>
+          <div class="profile-summary">
+            <h2>身体指标 & BMI</h2>
+            <p>实时计算 BMI、体脂率，并输出健康提醒。</p>
+            <div class="bmi-display">
+              <div>
+                <p>BMI</p>
+                <strong data-bind="bmiValue">--</strong>
+              </div>
+              <div>
+                <p>判定</p>
+                <strong data-bind="bmiStatus">--</strong>
+              </div>
+              <div>
+                <p>体脂率</p>
+                <strong data-bind="bodyFat">--</strong>
+              </div>
+            </div>
+            <div class="history-card">
+              <header>
+                <h3>历史记录</h3>
+                <span class="muted">自动保存最近测量</span>
+              </header>
+              <canvas id="bmi-chart" height="140"></canvas>
+              <ul id="history-list" class="history-list"></ul>
+            </div>
+            <div class="reminder-card">
+              <h3>提醒与建议</h3>
+              <p data-bind="reminder">填写资料后即可获得个性化提示。</p>
+            </div>
+            <ul class="bmi-range">
+              <li><span>偏瘦</span><span>&lt; 18.5</span></li>
+              <li><span>正常</span><span>18.5 - 23.9</span></li>
+              <li><span>超重</span><span>24 - 27.9</span></li>
+              <li><span>肥胖</span><span>&ge; 28</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="workouts">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">教学内容</p>
+              <h2>训练课程库</h2>
+              <p>多维筛选 + 课程详情 + 周计划生成器，匹配你的目标。</p>
+            </div>
+            <div class="filters">
+              <input type="search" id="filter-search" placeholder="搜索课程或动作" />
+              <select id="filter-muscle">
+                <option value="all">部位</option>
+                <option value="chest">胸部</option>
+                <option value="back">背部</option>
+                <option value="legs">下肢</option>
+                <option value="core">核心</option>
+                <option value="full">全身</option>
+              </select>
+              <select id="filter-level">
+                <option value="all">难度</option>
+                <option value="easy">入门</option>
+                <option value="medium">中级</option>
+                <option value="hard">高阶</option>
+              </select>
+              <select id="filter-equipment">
+                <option value="all">器械</option>
+                <option value="bodyweight">自重</option>
+                <option value="dumbbell">哑铃</option>
+                <option value="barbell">杠铃</option>
+                <option value="machine">器械</option>
+              </select>
+              <select id="filter-duration">
+                <option value="all">时长</option>
+                <option value="short">15-20min</option>
+                <option value="medium">20-35min</option>
+                <option value="long">35min+</option>
+              </select>
+            </div>
+          </div>
+          <div class="workout-grid" id="workout-grid"></div>
+          <div class="plan-builder">
+            <div>
+              <h3>周计划生成器</h3>
+              <p>选择训练目标与周频次，系统会为每一天匹配课程。</p>
+              <form id="plan-form" class="plan-form">
+                <label>训练目标
+                  <select name="planGoal">
+                    <option value="fat_loss">减脂</option>
+                    <option value="muscle_gain">增肌</option>
+                    <option value="keep_fit">综合提升</option>
+                  </select>
+                </label>
+                <label>每周天数
+                  <select name="planDays">
+                    <option value="3">3 天</option>
+                    <option value="4">4 天</option>
+                    <option value="5">5 天</option>
+                  </select>
+                </label>
+                <label>强度偏好
+                  <select name="planIntensity">
+                    <option value="easy">入门</option>
+                    <option value="medium">中级</option>
+                    <option value="hard">高阶</option>
+                  </select>
+                </label>
+                <button class="btn primary" type="submit">生成周计划</button>
+              </form>
+            </div>
+            <div class="plan-result" id="plan-result">
+              <p class="muted">提交后显示你的专属安排，可随时调整。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="nutrition">
+        <div class="container two-column">
+          <div>
+            <h2>营养与日志</h2>
+            <p>记录热量 + 宏量素、使用模板快速录入，并预留扫码入口。</p>
+            <ul class="checklist">
+              <li>每日热量 & 宏量素分布</li>
+              <li>自定义菜谱模板和提醒</li>
+              <li>扫码/穿戴数据接入占位</li>
+            </ul>
+          </div>
+          <div class="log-card">
+            <form id="nutrition-form">
+              <label>餐次
+                <select name="meal">
+                  <option value="breakfast">早餐</option>
+                  <option value="lunch">午餐</option>
+                  <option value="dinner">晚餐</option>
+                  <option value="snack">加餐</option>
+                </select>
+              </label>
+              <div class="form-row">
+                <label>热量 (kcal)
+                  <input type="number" name="calories" min="0" required />
+                </label>
+                <label>蛋白 (g)
+                  <input type="number" name="protein" min="0" />
+                </label>
+              </div>
+              <div class="form-row">
+                <label>碳水 (g)
+                  <input type="number" name="carbs" min="0" />
+                </label>
+                <label>脂肪 (g)
+                  <input type="number" name="fat" min="0" />
+                </label>
+              </div>
+              <label>备注
+                <textarea name="note" rows="2"></textarea>
+              </label>
+              <button class="btn primary" type="submit">记录营养</button>
+            </form>
+            <div class="nutrition-templates">
+              <p class="muted">快速录入</p>
+              <div class="template-buttons" id="nutrition-templates"></div>
+            </div>
+            <button class="btn ghost" id="scan-btn">扫码录入（占位）</button>
+            <div class="macro-summary" id="macro-summary"></div>
+            <div id="nutrition-log" class="nutrition-log"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="engagement">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">互动与追踪</p>
+              <h2>目标完成率 · 勋章 · 连续签到</h2>
+            </div>
+            <button class="btn ghost" id="generate-share-btn">生成分享文案</button>
+          </div>
+          <div class="engagement-grid">
+            <div class="goal-card">
+              <h3>目标追踪</h3>
+              <form id="goal-form">
+                <label>月度训练次数目标
+                  <input type="number" name="monthlyTarget" min="4" max="30" />
+                </label>
+                <label>已完成次数
+                  <input type="number" name="completed" min="0" />
+                </label>
+                <button class="btn primary" type="submit">更新目标</button>
+              </form>
+              <div class="goal-progress">
+                <div class="goal-circle" id="goal-circle">
+                  <span id="goal-percent">0%</span>
+                </div>
+                <p class="muted" id="goal-text">设置目标后查看进度</p>
+              </div>
+            </div>
+            <div class="checkin-card">
+              <h3>连续签到</h3>
+              <p class="muted">坚持越久，解锁更多徽章</p>
+              <button class="btn primary" id="checkin-btn">今日签到</button>
+              <p id="streak-text">已连续 0 天</p>
+              <ul class="badge-list" id="badge-list"></ul>
+            </div>
+            <div class="social-card">
+              <h3>好友鼓励</h3>
+              <p class="muted">邀请好友一起训练，互相点赞打卡。</p>
+              <ul id="social-feed" class="social-feed"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 数据分析 -->
+      <section class="panel" id="analytics">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">数据洞察</p>
+              <h2>数据分析与可视化</h2>
+              <p>多维度图表展示训练、营养、体重数据，帮助你更好地了解自己的健身进展。</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn primary" id="health-report-btn">生成健康报告</button>
+              <button class="btn ghost" id="export-data-btn">导出数据</button>
+            </div>
+          </div>
+
+          <!-- 图表网格 -->
+          <div class="analytics-grid">
+            <!-- 体重趋势图 -->
+            <div class="chart-card glass">
+              <h3>体重趋势</h3>
+              <p class="muted">查看体重变化趋势，了解减脂/增肌效果</p>
+              <canvas id="weight-trend-chart"></canvas>
+            </div>
+
+            <!-- 训练分布图 -->
+            <div class="chart-card glass">
+              <h3>训练分布</h3>
+              <p class="muted">各部位训练次数占比</p>
+              <canvas id="workout-distribution-chart"></canvas>
+            </div>
+
+            <!-- 营养摄入图 -->
+            <div class="chart-card glass">
+              <h3>营养摄入</h3>
+              <p class="muted">蛋白质、碳水、脂肪每日摄入量</p>
+              <canvas id="nutrition-chart"></canvas>
+            </div>
+
+            <!-- 健康评估雷达图 -->
+            <div class="chart-card glass">
+              <h3>健康评估</h3>
+              <p class="muted">力量、耐力、柔韧性等多维度评估</p>
+              <canvas id="fitness-radar-chart"></canvas>
+            </div>
+
+            <!-- 活动热力图 -->
+            <div class="chart-card glass full-width">
+              <h3>活动热力图</h3>
+              <p class="muted">过去12周的训练活跃度（类似GitHub贡献图）</p>
+              <div id="activity-heatmap"></div>
+            </div>
+          </div>
+
+          <!-- 时间对比 -->
+          <div class="time-comparison-section">
+            <h3>时间对比分析</h3>
+            <p class="muted">对比不同时间段的训练数据，了解进步趋势</p>
+
+            <div class="comparison-period-selector">
+              <button class="period-btn active" data-comparison-period="week">周对比</button>
+              <button class="period-btn" data-comparison-period="month">月对比</button>
+              <button class="period-btn" data-comparison-period="year">年对比</button>
+            </div>
+
+            <div id="comparison-stats" class="comparison-stats">
+              <!-- 对比统计将由 timeComparison.js 渲染 -->
+            </div>
+
+            <div class="chart-card glass">
+              <h3>数据对比图表</h3>
+              <canvas id="comparison-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 好友系统 -->
+      <section class="panel" id="friends">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">社交互动</p>
+              <h2>好友系统</h2>
+              <p>添加健身伙伴，互相鼓励，一起进步。</p>
+            </div>
+          </div>
+
+          <div class="friend-tabs">
+            <button class="tab-btn active" data-friend-tab="my-friends">我的好友</button>
+            <button class="tab-btn" data-friend-tab="discover">发现好友</button>
+            <button class="tab-btn" data-friend-tab="recommended">推荐好友</button>
+          </div>
+
+          <div class="friend-search-bar">
+            <input
+              type="search"
+              id="friend-search"
+              placeholder="搜索用户（昵称或邮箱）..."
+            />
+          </div>
+
+          <div id="friends-container" class="friends-container">
+            <!-- 好友列表将由 friends.js 渲染 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 活动动态流 -->
+      <section class="panel" id="activity-feed">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">社交动态</p>
+              <h2>活动动态流</h2>
+              <p>查看好友的训练动态，互相点赞鼓励</p>
+            </div>
+          </div>
+
+          <div class="activity-filters">
+            <button class="activity-filter-btn active" data-activity-filter="all">全部</button>
+            <button class="activity-filter-btn" data-activity-filter="workout">训练</button>
+            <button class="activity-filter-btn" data-activity-filter="nutrition">营养</button>
+            <button class="activity-filter-btn" data-activity-filter="checkin">打卡</button>
+            <button class="activity-filter-btn" data-activity-filter="forum">论坛</button>
+          </div>
+
+          <div id="activity-feed-container" class="activity-feed-container">
+            <!-- 活动流将由 activityFeed.js 渲染 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 排行榜系统 -->
+      <section class="panel" id="leaderboard">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">竞技排名</p>
+              <h2>排行榜</h2>
+              <p>查看各项数据排名，挑战更高位置。</p>
+            </div>
+          </div>
+
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-leaderboard-tab="workouts">训练次数</button>
+            <button class="tab-btn" data-leaderboard-tab="streak">连续天数</button>
+            <button class="tab-btn" data-leaderboard-tab="calories">消耗卡路里</button>
+            <button class="tab-btn" data-leaderboard-tab="completion">完成率</button>
+          </div>
+
+          <div class="leaderboard-period">
+            <button class="period-btn active" data-period="week">本周</button>
+            <button class="period-btn" data-period="month">本月</button>
+            <button class="period-btn" data-period="year">今年</button>
+          </div>
+
+          <div id="leaderboard-container" class="leaderboard-container">
+            <!-- 排行榜将由 leaderboard.js 渲染 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 训练日历 -->
+      <section class="panel" id="calendar">
+        <div class="container calendar-container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">日程管理</p>
+              <h2>训练日历</h2>
+              <p>查看训练计划，导出到你的日历应用。</p>
+            </div>
+          </div>
+
+          <div id="calendar-view">
+            <!-- 日历将由 calendarModule.js 渲染 -->
+          </div>
+
+          <div style="margin-top: 40px;">
+            <h3>📆 本周训练安排</h3>
+            <div id="week-workouts">
+              <!-- 本周训练将由 calendarModule.js 渲染 -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 论坛系统 -->
+      <section class="panel" id="forum">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">社区交流</p>
+              <h2>健身论坛</h2>
+              <p>分享经验、提出问题、互相帮助，一起进步。</p>
+            </div>
+            <button class="btn primary" id="new-topic-btn">发布主题</button>
+          </div>
+
+          <!-- 分类标签 -->
+          <div class="forum-tabs">
+            <button class="tab-btn active" data-forum-category="all">全部</button>
+            <button class="tab-btn" data-forum-category="training">💪 训练技巧</button>
+            <button class="tab-btn" data-forum-category="nutrition">🥗 营养饮食</button>
+            <button class="tab-btn" data-forum-category="equipment">🏋️ 器械装备</button>
+            <button class="tab-btn" data-forum-category="recovery">😴 恢复休息</button>
+            <button class="tab-btn" data-forum-category="motivation">🔥 动力分享</button>
+            <button class="tab-btn" data-forum-category="qa">❓ 问答求助</button>
+          </div>
+
+          <!-- 搜索和排序 -->
+          <div class="forum-search-bar">
+            <input
+              type="search"
+              id="forum-search"
+              placeholder="搜索主题或内容..."
+            />
+            <div class="forum-sort-tabs">
+              <button class="tab-btn active" data-forum-sort="latest">最新</button>
+              <button class="tab-btn" data-forum-sort="hot">最热</button>
+              <button class="tab-btn" data-forum-sort="replies">回复最多</button>
+            </div>
+          </div>
+
+          <!-- 主题列表 -->
+          <div id="forum-container" class="forum-container">
+            <!-- 论坛内容将由 forum.js 渲染 -->
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="content">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">内容与服务</p>
+              <h2>知识库 · 预约教练 · AI 轻教练</h2>
+              <p>提供FAQ、伤害预防、设备教学、消息中心等周边服务。</p>
+            </div>
+          </div>
+          <div class="content-grid">
+            <div class="faq-card">
+              <h3>常见问题</h3>
+              <div id="faq-list" class="accordion"></div>
+            </div>
+            <div class="coach-card">
+              <h3>预约教练</h3>
+              <form id="coach-form">
+                <label>姓名<input name="name" required /></label>
+                <label>联系方式<input name="contact" required /></label>
+                <label>期望日期<input type="date" name="date" required /></label>
+                <label>需求描述<textarea name="message" rows="2"></textarea></label>
+                <button class="btn primary" type="submit">提交预约</button>
+              </form>
+              <p class="muted" id="coach-feedback"></p>
+            </div>
+            <div class="ai-card">
+              <h3>AI 轻教练（占位）</h3>
+              <textarea id="ai-input" rows="3" placeholder="提问训练/营养建议"></textarea>
+              <button class="btn primary" id="ai-generate">生成建议</button>
+              <div class="ai-output" id="ai-output">参考 WHO/ACSM 指南，生成个性化提示。</div>
+            </div>
+            <div class="message-card">
+              <h3>消息中心</h3>
+              <ul id="message-center" class="message-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tech">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">管理 / 技术</p>
+              <h2>架构与测试策略</h2>
+              <p>说明模块化 JS、数据源切换、自动化测试与部署计划。</p>
+            </div>
+          </div>
+          <div class="tech-grid">
+            <article>
+              <h3>架构</h3>
+              <p>使用原生 ES Modules + storage service + 数据层，未来可替换为 REST API/状态管理。</p>
+              <ul>
+                <li>authService 封装注册/登录/速率限制</li>
+                <li>profile/workout/nutrition/engagement/content 等模块独立管理 UI</li>
+                <li>TODO Roadmap 指引版本迭代</li>
+              </ul>
+            </article>
+            <article>
+              <h3>数据源策略</h3>
+              <p>当前基于 localStorage，预留 `storage` 适配器，可无缝切换 REST / GraphQL。</p>
+              <ul>
+                <li>加入 API 层时只需替换 service</li>
+                <li>计划整合穿戴设备/扫码 API</li>
+              </ul>
+            </article>
+            <article>
+              <h3>测试 & 部署</h3>
+              <p>建议使用 Vitest / Playwright 做 BMI、日志、权限守卫测试；CI 集成 Lighthouse。</p>
+              <ul>
+                <li>设置 npm script：`test`, `lint`, `preview`</li>
+                <li>部署到 Netlify/Vercel，启用 HTTPS 与 PWA 缓存</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="roadmap">
+        <div class="container">
+          <h2>项目 Roadmap</h2>
+          <p>TODO 列表，按阶段推进。</p>
+          <ol class="todo-list" id="todo-list"></ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2025 FitSpark · 健身教学与数据伴侣</p>
+        <div class="footer-links">
+          <a href="#">使用指南</a>
+          <a href="#">隐私说明</a>
+          <a href="#">联系教练</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal" id="auth-modal" aria-hidden="true">
+      <div class="modal-content">
+        <button class="modal-close" data-close>&times;</button>
+        <div id="auth-modal-content"></div>
+      </div>
+    </div>
+
+    <template id="workout-card-template">
+      <article class="workout-card">
+        <header>
+          <p class="tag" data-field="level"></p>
+          <h3 data-field="title"></h3>
+        </header>
+        <p data-field="description"></p>
+        <ul>
+          <li>部位：<span data-field="muscle"></span></li>
+          <li>器械：<span data-field="equipment"></span></li>
+          <li>时长：<span data-field="duration"></span></li>
+        </ul>
+        <button class="btn ghost" data-action="add">查看详情</button>
+      </article>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>

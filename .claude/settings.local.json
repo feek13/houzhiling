@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npx serve:*)",
+      "Bash(test:*)",
+      "Bash(npm run dev:*)",
+      "Bash(chmod:*)",
+      "Bash(node extract-sections.js:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(done)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__fill_form",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__evaluate_script",
+      "Bash(node -c:*)",
+      "Bash(open -a \"Google Chrome\" http://localhost:3000/training/workouts)",
+      "Bash(cat:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npm install)",
+      "Bash(npm run test:unit:*)",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__press_key",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__github__create_repository",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

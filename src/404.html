@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+  <title>FitLife Pro - 智能健身助手</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="assets/css/layout.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/friends-leaderboard.css" />
+  <link rel="stylesheet" href="assets/css/analytics.css" />
+  <link rel="stylesheet" href="assets/css/forum.css" />
+  <link rel="stylesheet" href="assets/css/community.css" />
+  <link rel="stylesheet" href="assets/css/share-card.css" />
+  <link rel="stylesheet" href="assets/css/activity-feed.css" />
+  <link rel="stylesheet" href="assets/css/health-report.css" />
+  <link rel="stylesheet" href="assets/css/oauth.css" />
+  <link rel="stylesheet" href="assets/css/calendar.css" />
+  <link rel="stylesheet" href="assets/css/socialShare.css" />
+  <link rel="stylesheet" href="assets/css/user-profile.css" />
+  <link rel="stylesheet" href="assets/css/course-creator.css" />
+  <link rel="stylesheet" href="assets/css/notifications.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous" />
+</head>
+
+<body>
+  <!-- Header with Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a href="/" data-link class="logo-link">
+          <img src="/favicon.svg" alt="Logo" class="logo-icon"
+            style="height: 24px; width: 24px; vertical-align: text-bottom; margin-right: 8px;">
+          FitLife Pro
+        </a>
+      </div>
+
+      <!-- 一级导航（由Navigation组件动态渲染） -->
+      <nav class="main-nav">
+        <!-- 导航项将由Navigation.js动态生成 -->
+      </nav>
+
+      <button class="btn primary" id="auth-btn">开始体验</button>
+    </div>
+
+    <!-- 二级标签导航（根据路由动态显示） -->
+    <nav class="sub-nav" id="sub-nav" style="display: none;">
+      <!-- 二级导航项将由Navigation.js动态生成 -->
+    </nav>
+  </header>
+
+  <main>
+    <!-- 主内容容器（路由视图将在此渲染） -->
+    <div id="app">
+      <!-- 视图内容由路由系统动态加载 -->
+      <div class="loading">
+        <p>加载中...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 模态框（保留原有的auth modal） -->
+  <div id="auth-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-dialog">
+      <button class="modal-close" data-close>&times;</button>
+      <div id="auth-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 训练卡片模板（保留原有模板） -->
+  <template id="workout-card-template">
+    <article class="workout-card">
+      <header>
+        <p class="tag" data-field="level"></p>
+        <h3 data-field="title"></h3>
+      </header>
+      <p data-field="description"></p>
+      <ul>
+        <li>部位：<span data-field="muscle"></span></li>
+        <li>器械：<span data-field="equipment"></span></li>
+        <li>时长：<span data-field="duration"></span></li>
+      </ul>
+      <button class="btn ghost" data-action="add">查看详情</button>
+    </article>
+  </template>
+
+  <!-- 外部依赖 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+
+  <!-- 应用入口（ES Module） -->
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+/**
+ * 健康评估报告样式
+ */
+
+.health-report {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 报告头部 */
+.report-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.report-header h2 {
+  margin: 0 0 16px 0;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.report-user {
+  margin: 8px 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.report-date {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 综合评分 */
+.report-overall-score {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 32px;
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.1) 0%,
+    rgba(56, 249, 215, 0.05) 100%
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(67, 233, 123, 0.2);
+}
+
+.score-circle {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--color) calc(var(--score) * 1%),
+    rgba(255, 255, 255, 0.1) 0
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.score-circle::before {
+  content: '';
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: #0F1B2A;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.score-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color);
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+}
+
+.score-desc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* 分项评分 */
+.report-scores {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.score-item {
+  margin-bottom: 24px;
+}
+
+.score-item:last-child {
+  margin-bottom: 0;
+}
+
+.score-item h4 {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.score-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+
+.score-number {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+/* 数据总览 */
+.report-stats {
+  margin-bottom: 40px;
+}
+
+.report-stats h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(67, 233, 123, 0.3);
+  box-shadow: 0 8px 24px rgba(67, 233, 123, 0.1);
+}
+
+.stat-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #43e97b;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* 改进建议 */
+.report-recommendations {
+  margin-bottom: 32px;
+}
+
+.report-recommendations h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+}
+
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recommendation-item {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border-left: 4px solid;
+}
+
+.recommendation-item[data-priority="high"] {
+  border-left-color: #ff6b6b;
+}
+
+.recommendation-item[data-priority="medium"] {
+  border-left-color: #ffa62b;
+}
+
+.recommendation-item[data-priority="low"] {
+  border-left-color: #43e97b;
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rec-priority {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.rec-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  flex: 1;
+}
+
+.recommendation-item p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 报告操作 */
+.report-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.report-actions .btn {
+  min-width: 140px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .health-report {
+    max-width: 100%;
+  }
+
+  .report-header h2 {
+    font-size: 24px;
+  }
+
+  .score-circle {
+    width: 140px;
+    height: 140px;
+  }
+
+  .score-circle::before {
+    width: 110px;
+    height: 110px;
+  }
+
+  .score-value {
+    font-size: 40px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-icon {
+    font-size: 28px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .report-actions {
+    flex-direction: column;
+  }
+
+  .report-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-overall-score {
+    padding: 24px 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendation-item {
+    padding: 16px;
+  }
+}

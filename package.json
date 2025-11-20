@@ -1,0 +1,41 @@
+{
+  "name": "fitspark",
+  "version": "1.0.0",
+  "description": "FitSpark - Your Personal Fitness Companion",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve src -l 3000 -s",
+    "test": "vitest",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:all": "vitest run",
+    "lint": "eslint src --ext .js",
+    "format": "prettier --write \"src/**/*.{js,css,html}\""
+  },
+  "keywords": [
+    "fitness",
+    "health",
+    "workout",
+    "nutrition",
+    "tracker"
+  ],
+  "author": "FitSpark Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitest/ui": "^1.2.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "eslint": "^8.56.0",
+    "jsdom": "^24.0.0",
+    "prettier": "^3.2.4",
+    "serve": "^14.2.1",
+    "vitest": "^1.2.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

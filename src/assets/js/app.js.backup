@@ -1,0 +1,250 @@
+import { authUI } from './modules/authUI.js';
+import { profileModule } from './modules/profile.js';
+import { workoutModule } from './modules/workouts.js';
+import { nutritionModule } from './modules/nutrition.js';
+import { todoModule } from './modules/todo.js';
+import { authService } from './services/authService.js';
+import { modal } from './modules/modal.js';
+import { engagementModule } from './modules/engagement.js';
+import { contentModule } from './modules/content.js';
+import { friendsModule } from './modules/friends.js';
+import { leaderboardModule } from './modules/leaderboard.js';
+import { analyticsModule } from './modules/analytics.js';
+import { exporter } from './utils/exporter.js';
+import { forumModule } from './modules/forum.js';
+import { shareCardModule } from './modules/shareCard.js';
+import { activityFeedModule } from './modules/activityFeed.js';
+import { timeComparisonModule } from './modules/timeComparison.js';
+import { healthReportModule } from './modules/healthReport.js';
+import { calendarModule } from './modules/calendarModule.js';
+import { userProfileModule } from './modules/userProfile.js';
+import { eventBus, EventNames } from './services/eventBus.js';
+import { performanceMonitor } from './utils/performanceMonitor.js';
+import { lazyLoader } from './utils/lazyLoader.js';
+
+const setProfileGuard = (isAuthed) => {
+  const guardWrapper = document.querySelector('[data-guard="profile"]');
+  const form = document.getElementById('profile-form');
+  if (!guardWrapper || !form) return;
+  const guard = guardWrapper.querySelector('.guard-message');
+  guard.hidden = !!isAuthed;
+  form.querySelectorAll('input, select, textarea, button').forEach((field) => {
+    if (field.type !== 'button' || field.dataset.lockable !== 'false') {
+      field.disabled = !isAuthed;
+    }
+  });
+};
+
+const toggleAuthUI = (isAuthenticated) => {
+  // 隐藏/显示导航栏的"登录/注册"链接
+  const authNavLink = document.querySelector('.main-nav a[href="#auth"]');
+  if (authNavLink) {
+    authNavLink.style.display = isAuthenticated ? 'none' : '';
+  }
+
+  // 显示/隐藏个人资料链接（登录后显示）
+  const profileNavLink = document.querySelector('.main-nav a[href="#user-profile"]');
+  if (profileNavLink) {
+    profileNavLink.style.display = isAuthenticated ? '' : 'none';
+  }
+
+  // 隐藏/显示"开始体验"和"立即注册"按钮
+  document.querySelectorAll('[data-open="auth-modal"]').forEach((btn) => {
+    btn.style.display = isAuthenticated ? 'none' : '';
+  });
+
+  // 隐藏/显示"基础登录注册"整个区块
+  const authSection = document.getElementById('auth');
+  if (authSection) {
+    authSection.style.display = isAuthenticated ? 'none' : '';
+  }
+};
+
+const initAuthSection = () => {
+  const panel = document.getElementById('auth-panel');
+  authUI.mount(panel, handleAuthSuccess);
+  document.querySelectorAll('[data-open="auth-modal"]').forEach((btn) =>
+    btn.addEventListener('click', () => authUI.open(handleAuthSuccess))
+  );
+};
+
+function handleAuthSuccess() {
+  const container = document.getElementById('auth-panel');
+  const user = authService.currentUser();
+  if (!user) return;
+  container.innerHTML = `
+    <div class="session-card">
+      <p>欢迎回来，<strong>${user.nickname || user.email}</strong></p>
+      <p class="muted">${user.email}</p>
+      <button class="btn ghost" id="logout-btn">退出登录</button>
+    </div>
+  `;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    authService.logout();
+    authUI.mount(container, handleAuthSuccess);
+    setProfileGuard(false);
+    toggleAuthUI(false);
+  });
+  if (user.profile) profileModule.fillForm(user.profile);
+  if (user.metricsHistory) profileModule.renderHistory(user.metricsHistory);
+  setProfileGuard(true);
+  toggleAuthUI(true);
+}
+
+const initScrollLinks = () => {
+  document.querySelectorAll('[data-scroll]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = document.querySelector(btn.dataset.scroll);
+      target?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+};
+
+const initModalClose = () => {
+  const closeBtn = document.querySelector('[data-close]');
+  closeBtn?.addEventListener('click', () => modal.close());
+};
+
+const initEventBusListeners = () => {
+  // Listen to authentication events
+  eventBus.on(EventNames.AUTH_LOGIN, (data) => {
+    console.log('[EventBus] User logged in:', data.user.email);
+    // Refresh modules that depend on user data
+    activityFeedModule.init();
+    friendsModule.init();
+    leaderboardModule.init();
+    // Hide auth-related UI elements
+    toggleAuthUI(true);
+  });
+
+  eventBus.on(EventNames.AUTH_LOGOUT, (data) => {
+    console.log('[EventBus] User logged out:', data.user.email);
+    // Clear sensitive data from UI
+    activityFeedModule.init();
+    // Show auth-related UI elements
+    toggleAuthUI(false);
+  });
+
+  // Listen to modal events
+  eventBus.on(EventNames.MODAL_OPEN, (data) => {
+    console.log('[EventBus] Modal opened:', data.type || 'generic');
+  });
+
+  eventBus.on(EventNames.MODAL_CLOSE, () => {
+    console.log('[EventBus] Modal closed');
+  });
+
+  // Listen to workout events for activity feed updates
+  eventBus.on(EventNames.WORKOUT_COMPLETED, (data) => {
+    console.log('[EventBus] Workout completed:', data);
+    activityFeedModule.init(); // Refresh activity feed
+    analyticsModule.init(); // Update analytics
+  });
+
+  // Listen to nutrition events
+  eventBus.on(EventNames.NUTRITION_LOGGED, (data) => {
+    console.log('[EventBus] Nutrition logged:', data);
+    activityFeedModule.init(); // Refresh activity feed
+  });
+
+  // Wildcard listener for debugging (listens to all events)
+  if (eventBus.debug) {
+    eventBus.on('*', (eventName, data) => {
+      console.log(`[EventBus] Event fired: ${eventName}`, data);
+    });
+  }
+};
+
+const init = () => {
+  // Initialize performance monitoring
+  performanceMonitor.init({
+    enabled: true,
+    logToConsole: false,
+    sampleRate: 1.0,
+    reportInterval: 30000
+  });
+
+  performanceMonitor.mark('app-init-start');
+
+  // Initialize lazy loading for images
+  lazyLoader.lazyLoadImages('img[data-src]');
+
+  // Initialize event bus listeners
+  initEventBusListeners();
+
+  // Core modules (always loaded)
+  initAuthSection();
+  userProfileModule.init();
+  profileModule.init();
+  workoutModule.init();
+  nutritionModule.init();
+  todoModule.render();
+  engagementModule.init();
+  contentModule.init();
+  analyticsModule.init();
+  timeComparisonModule.init();
+  friendsModule.init();
+  activityFeedModule.init();
+  leaderboardModule.init();
+  calendarModule.init();
+  forumModule.init();
+  initScrollLinks();
+  initModalClose();
+  initExporter();
+  initShareCard();
+  initHealthReport();
+
+  const user = authService.currentUser();
+  if (user) {
+    handleAuthSuccess();
+    toggleAuthUI(true);
+  } else {
+    setProfileGuard(false);
+    toggleAuthUI(false);
+  }
+
+  performanceMonitor.mark('app-init-end');
+  performanceMonitor.measure('app-initialization', 'app-init-start', 'app-init-end');
+
+  // Log performance report after page load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const score = performanceMonitor.getScore();
+      console.log(`[Performance] Score: ${score}/100`);
+
+      if (score < 80) {
+        const recommendations = performanceMonitor.getRecommendations();
+        console.warn('[Performance] Recommendations:', recommendations);
+      }
+    }, 1000);
+  });
+};
+
+const initExporter = () => {
+  const exportBtn = document.getElementById('export-data-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      exporter.openExportModal();
+    });
+  }
+};
+
+const initShareCard = () => {
+  const shareBtn = document.getElementById('generate-share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      shareCardModule.openShareModal();
+    });
+  }
+};
+
+const initHealthReport = () => {
+  const reportBtn = document.getElementById('health-report-btn');
+  if (reportBtn) {
+    reportBtn.addEventListener('click', () => {
+      healthReportModule.openReportModal();
+    });
+  }
+};
+
+window.addEventListener('DOMContentLoaded', init);

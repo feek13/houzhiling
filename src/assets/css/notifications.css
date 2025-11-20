@@ -1,0 +1,372 @@
+/* ===========================
+   Notification System Styles
+   =========================== */
+
+/* Modal Container */
+.notification-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999; /* 提高到最高层级，确保不被任何模态框覆盖 */
+  pointer-events: none;
+}
+
+.notification-modal-container > * {
+  pointer-events: auto;
+}
+
+/* Backdrop */
+.notification-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  animation: backdropFadeIn 0.3s ease-out;
+  z-index: 99998; /* 提高到最高层级 */
+}
+
+.notification-backdrop-exit {
+  animation: backdropFadeOut 0.3s ease-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Modal */
+.notification-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  z-index: 99999; /* 提高到最高层级，确保不被任何模态框覆盖 */
+  max-width: 90%;
+  width: 420px;
+  opacity: 0;
+}
+
+.notification-modal-enter-active {
+  animation: modalEnter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.notification-modal-exit {
+  animation: modalExit 0.3s ease-out forwards;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes modalExit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+/* Modal Content */
+.notification-modal-content {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Modal Header */
+.notification-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.notification-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Modal Body */
+.notification-modal-body {
+  padding: 20px 24px;
+}
+
+.notification-modal-message {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+/* Modal Footer */
+.notification-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 24px;
+}
+
+/* Notification Icons */
+.notification-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.notification-icon-success {
+  color: #10b981;
+}
+
+.notification-icon-error {
+  color: #ef4444;
+}
+
+.notification-icon-warning {
+  color: #f59e0b;
+}
+
+.notification-icon-info {
+  color: #3b82f6;
+}
+
+.notification-icon-question {
+  color: #8b5cf6;
+}
+
+/* Notification Buttons */
+.notification-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  min-width: 80px;
+}
+
+.notification-btn:active {
+  transform: scale(0.98);
+}
+
+.notification-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.notification-btn-primary:hover {
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+  transform: translateY(-1px);
+}
+
+.notification-btn-secondary {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.notification-btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+/* Toast Container */
+.notification-toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.notification-toast-container > * {
+  pointer-events: auto;
+}
+
+/* Toast */
+.notification-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateX(400px);
+  border-left: 4px solid;
+}
+
+.notification-toast-enter-active {
+  animation: toastSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.notification-toast-exit {
+  animation: toastSlideOut 0.3s ease-out forwards;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(400px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(400px);
+  }
+}
+
+.notification-toast-success {
+  border-left-color: #10b981;
+}
+
+.notification-toast-error {
+  border-left-color: #ef4444;
+}
+
+.notification-toast-warning {
+  border-left-color: #f59e0b;
+}
+
+.notification-toast-info {
+  border-left-color: #3b82f6;
+}
+
+.notification-toast .notification-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.notification-toast-message {
+  font-size: 14px;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .notification-modal {
+    width: calc(100% - 32px);
+    max-width: none;
+  }
+
+  .notification-modal-content {
+    border-radius: 12px;
+  }
+
+  .notification-modal-header {
+    padding: 20px 20px 12px;
+  }
+
+  .notification-modal-title {
+    font-size: 18px;
+  }
+
+  .notification-modal-body {
+    padding: 16px 20px;
+  }
+
+  .notification-modal-footer {
+    padding: 12px 20px 20px;
+    flex-direction: column-reverse;
+  }
+
+  .notification-btn {
+    width: 100%;
+  }
+
+  .notification-toast-container {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .notification-toast {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .notification-modal-content {
+    background: #1f2937;
+  }
+
+  .notification-modal-header {
+    border-bottom-color: #374151;
+  }
+
+  .notification-modal-title {
+    color: #f9fafb;
+  }
+
+  .notification-modal-message {
+    color: #d1d5db;
+  }
+
+  .notification-btn-secondary {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .notification-btn-secondary:hover {
+    background: #4b5563;
+  }
+
+  .notification-toast {
+    background: #1f2937;
+  }
+
+  .notification-toast-message {
+    color: #f9fafb;
+  }
+}

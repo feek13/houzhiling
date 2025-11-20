@@ -1,0 +1,878 @@
+/**
+ * 日历模块样式
+ */
+
+.calendar-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 日历头部 */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.calendar-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-nav-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendar-nav-btn:hover {
+  background: rgba(67, 233, 123, 0.1);
+  border-color: rgba(67, 233, 123, 0.3);
+  transform: scale(1.05);
+}
+
+/* 日历统计 */
+.calendar-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.calendar-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.1) 0%,
+    rgba(56, 249, 215, 0.05) 100%
+  );
+  border: 1px solid rgba(67, 233, 123, 0.2);
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.calendar-stat:hover {
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #43e97b;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.calendar-weekday {
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-day:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(67, 233, 123, 0.3);
+  transform: scale(1.05);
+}
+
+.calendar-day.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.calendar-day.empty:hover {
+  background: transparent;
+  transform: none;
+}
+
+.calendar-day.today {
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.2) 0%,
+    rgba(56, 249, 215, 0.1) 100%
+  );
+  border: 2px solid rgba(67, 233, 123, 0.5);
+}
+
+.calendar-day.has-workout {
+  border-color: rgba(67, 233, 123, 0.3);
+}
+
+.calendar-day.has-plan {
+  background: rgba(56, 189, 248, 0.05);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.calendar-day.has-plan.has-workout {
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.1) 0%,
+    rgba(56, 189, 248, 0.1) 100%
+  );
+  border-color: rgba(67, 233, 123, 0.3);
+}
+
+.day-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.day-workouts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.workout-dot {
+  width: 20px;
+  height: 20px;
+  background: rgba(67, 233, 123, 0.3);
+  border: 1px solid rgba(67, 233, 123, 0.5);
+  border-radius: 6px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #43e97b;
+  font-weight: 600;
+}
+
+.plan-indicator {
+  font-size: 16px;
+  line-height: 1;
+  margin-left: 2px;
+  filter: drop-shadow(0 2px 4px rgba(56, 189, 248, 0.3));
+}
+
+.workout-dot.completed {
+  background: rgba(67, 233, 123, 0.5);
+  border-color: #43e97b;
+}
+
+.workout-more {
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+/* 日历操作 */
+.calendar-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+/* 某天训练详情模态框 */
+.day-workouts-modal {
+  padding: 24px;
+}
+
+.day-workouts-modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.workout-list {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workout-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.workout-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(67, 233, 123, 0.3);
+}
+
+.workout-item.completed {
+  opacity: 0.7;
+  border-color: rgba(67, 233, 123, 0.3);
+}
+
+.workout-time {
+  font-size: 14px;
+  font-weight: 600;
+  color: #43e97b;
+  min-width: 50px;
+}
+
+.workout-info {
+  flex: 1;
+}
+
+.workout-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.workout-meta {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 导出日历模态框 */
+.export-calendar-modal {
+  padding: 24px;
+  max-width: 500px;
+}
+
+.export-calendar-modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.export-info {
+  padding: 16px;
+  background: rgba(67, 233, 123, 0.1);
+  border: 1px solid rgba(67, 233, 123, 0.2);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.export-info p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.export-info ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.export-info li {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.8;
+}
+
+/* 本周训练网格布局 */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* 周训练卡片 */
+.week-day-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.week-day-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.week-day-card.today {
+  border: 2px solid rgba(67, 233, 123, 0.5);
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.08) 0%,
+    rgba(56, 249, 215, 0.04) 100%
+  );
+}
+
+.week-day-card.has-content {
+  border-color: rgba(67, 233, 123, 0.3);
+}
+
+/* 卡片头部 */
+.week-card-header {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.day-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.day-emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.day-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.day-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.day-date {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.today-badge {
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 卡片内容 */
+.week-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 80px;
+}
+
+/* 训练部分 */
+.week-section {
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.week-section:hover {
+  transform: translateX(4px);
+}
+
+.completed-section {
+  background: rgba(67, 233, 123, 0.08);
+  border: 1px solid rgba(67, 233, 123, 0.2);
+}
+
+.plan-section {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 训练详情 */
+.workout-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.workout-type {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.workout-duration,
+.workout-calories {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 训练计划内容 */
+.plan-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plan-line {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid rgba(56, 189, 248, 0.5);
+  border-radius: 4px;
+  line-height: 1.6;
+}
+
+/* 休息日 */
+.rest-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  opacity: 0.5;
+}
+
+.rest-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.rest-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.workout-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 12px;
+  background: rgba(67, 233, 123, 0.1);
+  border: 1px solid rgba(67, 233, 123, 0.3);
+  border-radius: 10px;
+}
+
+.date-day {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.date-num {
+  font-size: 24px;
+  font-weight: 700;
+  color: #43e97b;
+}
+
+.workout-details {
+  flex: 1;
+}
+
+.workout-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 6px;
+}
+
+.workout-time {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.workout-status {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .calendar-day {
+    padding: 4px;
+  }
+
+  .day-number {
+    font-size: 14px;
+  }
+
+  .workout-dot {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+
+  .calendar-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .calendar-actions {
+    flex-direction: column;
+  }
+
+  .calendar-actions .btn {
+    width: 100%;
+  }
+
+  /* 本周训练卡片响应式 */
+  .week-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .week-day-card {
+    border-radius: 12px;
+  }
+
+  .week-card-header {
+    padding: 12px;
+  }
+
+  .day-emoji {
+    font-size: 20px;
+  }
+
+  .day-name {
+    font-size: 14px;
+  }
+
+  .day-date {
+    font-size: 11px;
+  }
+
+  .today-badge {
+    padding: 3px 10px;
+    font-size: 10px;
+  }
+
+  .week-card-body {
+    padding: 12px;
+  }
+
+  .workout-detail {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-header {
+    padding: 16px;
+  }
+
+  .calendar-title {
+    font-size: 18px;
+  }
+
+  .calendar-nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .calendar-weekday {
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+
+  .workout-dot {
+    display: none;
+  }
+
+  .calendar-day.has-workouts::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #43e97b;
+    border-radius: 50%;
+  }
+}
+
+/* 训练计划编辑模态框 */
+.training-plan-modal {
+  max-width: 600px;
+  width: 90%;
+}
+
+.training-plan-modal .modal-body {
+  padding: 24px;
+}
+
+.completed-workouts {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(67, 233, 123, 0.05);
+  border: 1px solid rgba(67, 233, 123, 0.2);
+  border-radius: 12px;
+}
+
+.completed-workouts h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.completed-workouts ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.completed-workouts li {
+  padding: 8px 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.completed-workouts li:last-child {
+  border-bottom: none;
+}
+
+.plan-editor h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.plan-textarea {
+  width: 100%;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+  transition: all 0.2s ease;
+}
+
+.plan-textarea:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.plan-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.plan-tips {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.training-plan-modal .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.training-plan-modal .modal-footer .btn {
+  flex: 1;
+}
+
+/* 模态框动画 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000; /* 降低 z-index，确保 notification (z-index: 9999) 始终在最上层 */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+}
+
+.modal-content {
+  background: rgba(20, 20, 30, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.show .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  transform: rotate(90deg);
+}

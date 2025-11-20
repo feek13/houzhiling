@@ -1,0 +1,521 @@
+/**
+ * 活动动态流样式
+ */
+
+/* 活动流容器 */
+.activity-feed-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* 发布动态表单 */
+.post-activity-form {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.post-activity-form textarea {
+  width: 100%;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.3s ease;
+}
+
+.post-activity-form textarea:focus {
+  outline: none;
+  border-color: rgba(67, 233, 123, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(67, 233, 123, 0.1);
+}
+
+.post-activity-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+#post-activity-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  border: none;
+  border-radius: 10px;
+  color: #0F1B2A;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#post-activity-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(67, 233, 123, 0.3);
+}
+
+#post-activity-btn:active {
+  transform: translateY(0);
+}
+
+/* 过滤器 */
+.activity-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap;
+}
+
+.activity-filter-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activity-filter-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.activity-filter-btn.active {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #0F1B2A;
+  font-weight: 600;
+}
+
+/* 活动列表 */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 活动项 */
+.activity-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(67, 233, 123, 0.1);
+  border-color: rgba(67, 233, 123, 0.2);
+}
+
+/* 活动头部 */
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.activity-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(67, 233, 123, 0.3);
+}
+
+.activity-user-info {
+  flex: 1;
+}
+
+.activity-user-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.activity-time {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.activity-icon {
+  font-size: 28px;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.activity-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.like-btn {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 107, 107, 0.3);
+  transform: scale(1.05);
+}
+
+.like-btn.liked {
+  border-color: rgba(255, 107, 107, 0.4);
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+}
+
+.highlight {
+  color: #43e97b;
+  font-weight: 600;
+}
+
+/* 活动内容 */
+.activity-content {
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.post-content {
+  display: block;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.activity-text {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.activity-text strong {
+  color: #43e97b;
+  font-weight: 600;
+}
+
+.activity-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.activity-stats span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+/* 活动操作 */
+.activity-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.activity-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activity-action-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(67, 233, 123, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.activity-action-btn:active {
+  transform: scale(0.98);
+}
+
+.action-icon {
+  font-size: 18px;
+}
+
+.action-count {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 评论区域 */
+.activity-comments {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.comment-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.comment-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-content strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.comment-content p {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.comment-time {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 评论表单 */
+.comment-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.comment-form input:focus {
+  outline: none;
+  border-color: rgba(67, 233, 123, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.comment-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-small {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-small.primary {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #0F1B2A;
+}
+
+.btn-small.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(67, 233, 123, 0.3);
+}
+
+.btn-small.primary:active {
+  transform: translateY(0);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.empty-state .muted {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .activity-feed-container {
+    max-width: 100%;
+  }
+
+  .post-activity-form {
+    padding: 16px;
+  }
+
+  .post-activity-form textarea {
+    min-height: 80px;
+    font-size: 14px;
+  }
+
+  .activity-item {
+    padding: 16px;
+  }
+
+  .activity-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .activity-user-info h4 {
+    font-size: 15px;
+  }
+
+  .activity-icon {
+    font-size: 24px;
+  }
+
+  .activity-stats {
+    gap: 8px;
+  }
+
+  .activity-stats span {
+    font-size: 12px;
+  }
+
+  .activity-actions {
+    gap: 8px;
+  }
+
+  .activity-action-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .comment-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activity-filters {
+    padding: 4px;
+  }
+
+  .activity-filter-btn {
+    min-width: auto;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .activity-item {
+    padding: 14px;
+  }
+
+  .activity-text {
+    font-size: 14px;
+  }
+
+  .activity-action-btn span:not(.action-icon) {
+    display: none;
+  }
+
+  .comment-form {
+    flex-direction: column;
+  }
+
+  .comment-form input,
+  .btn-small {
+    width: 100%;
+  }
+}

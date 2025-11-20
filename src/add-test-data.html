@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加测试数据 - FitSpark</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .description {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    button {
+      background: #43e97b;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #38d26a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(67, 233, 123, 0.3);
+    }
+    button.secondary {
+      background: #667eea;
+    }
+    button.secondary:hover {
+      background: #5568d3;
+    }
+    .message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+    }
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    .data-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .data-info h3 {
+      margin-top: 0;
+      color: #495057;
+    }
+    .data-info ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .data-info li {
+      margin: 5px 0;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏋️ 添加测试数据</h1>
+    <p class="description">点击下面的按钮为您的账户添加测试训练数据，以查看健康评估雷达图效果。</p>
+
+    <div class="data-info">
+      <h3>将添加的测试数据：</h3>
+      <ul>
+        <li><strong>力量训练：</strong>上肢、下肢、核心各3次（共9次）</li>
+        <li><strong>耐力训练：</strong>心肺、全身各3次（共6次）</li>
+        <li><strong>柔韧性训练：</strong>灵活性训练3次</li>
+        <li><strong>HIIT训练：</strong>高强度间歇训练4次</li>
+        <li><strong>总计：</strong>22次训练，分布在最近30天内</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <button id="addDataBtn">添加测试数据</button>
+      <button id="clearDataBtn" class="secondary">清除所有数据</button>
+      <button id="viewAnalyticsBtn" class="secondary">查看数据分析</button>
+    </div>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <script type="module">
+    const showMessage = (text, type = 'success') => {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message ${type}`;
+      msg.style.display = 'block';
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 3000);
+    };
+
+    // 添加测试数据
+    document.getElementById('addDataBtn').addEventListener('click', () => {
+      try {
+        // 检查是否已登录
+        const session = localStorage.getItem('fitspark:session');
+        if (!session) {
+          showMessage('请先登录！将跳转到登录页面...', 'info');
+          setTimeout(() => {
+            window.location.href = '/auth';
+          }, 1500);
+          return;
+        }
+
+        const user = JSON.parse(session);
+        const userId = user.id;
+
+        // 生成过去30天内随机日期
+        const getRandomDate = (daysAgo) => {
+          const date = new Date();
+          date.setDate(date.getDate() - daysAgo);
+          return date.toISOString();
+        };
+
+        // 创建测试训练数据
+        const testWorkouts = [
+          // 力量训练 - 上肢
+          { userId, muscle: '上肢', caloriesBurned: 280, duration: 30, completedAt: getRandomDate(2) },
+          { userId, muscle: '上肢', caloriesBurned: 310, duration: 35, completedAt: getRandomDate(8) },
+          { userId, muscle: '上肢', caloriesBurned: 295, duration: 32, completedAt: getRandomDate(15) },
+
+          // 力量训练 - 下肢
+          { userId, muscle: '下肢', caloriesBurned: 340, duration: 38, completedAt: getRandomDate(3) },
+          { userId, muscle: '下肢', caloriesBurned: 365, duration: 40, completedAt: getRandomDate(10) },
+          { userId, muscle: '下肢', caloriesBurned: 350, duration: 36, completedAt: getRandomDate(18) },
+
+          // 力量训练 - 核心
+          { userId, muscle: '核心', caloriesBurned: 240, duration: 28, completedAt: getRandomDate(4) },
+          { userId, muscle: '核心', caloriesBurned: 260, duration: 30, completedAt: getRandomDate(12) },
+          { userId, muscle: '核心', caloriesBurned: 255, duration: 29, completedAt: getRandomDate(20) },
+
+          // 耐力训练 - 心肺
+          { userId, muscle: '心肺', caloriesBurned: 420, duration: 45, completedAt: getRandomDate(1) },
+          { userId, muscle: '心肺', caloriesBurned: 450, duration: 48, completedAt: getRandomDate(7) },
+          { userId, muscle: '心肺', caloriesBurned: 435, duration: 46, completedAt: getRandomDate(14) },
+
+          // 耐力训练 - 全身
+          { userId, muscle: '全身', caloriesBurned: 480, duration: 50, completedAt: getRandomDate(5) },
+          { userId, muscle: '全身', caloriesBurned: 465, duration: 48, completedAt: getRandomDate(11) },
+          { userId, muscle: '全身', caloriesBurned: 475, duration: 49, completedAt: getRandomDate(19) },
+
+          // 柔韧性训练
+          { userId, muscle: '灵活性', type: 'flexibility', caloriesBurned: 150, duration: 30, completedAt: getRandomDate(6) },
+          { userId, muscle: '灵活性', type: 'flexibility', caloriesBurned: 160, duration: 32, completedAt: getRandomDate(13) },
+          { userId, muscle: '灵活性', type: 'yoga', caloriesBurned: 155, duration: 31, completedAt: getRandomDate(21) },
+
+          // HIIT训练
+          { userId, muscle: 'HIIT', type: 'hiit', caloriesBurned: 520, duration: 28, completedAt: getRandomDate(2) },
+          { userId, muscle: 'HIIT', type: 'hiit', caloriesBurned: 510, duration: 27, completedAt: getRandomDate(9) },
+          { userId, muscle: 'HIIT', type: 'hiit', caloriesBurned: 530, duration: 29, completedAt: getRandomDate(16) },
+          { userId, muscle: 'HIIT', type: 'hiit', caloriesBurned: 515, duration: 28, completedAt: getRandomDate(23) }
+        ];
+
+        // 保存到localStorage
+        const existingWorkouts = JSON.parse(localStorage.getItem('workouts') || '[]');
+        const updatedWorkouts = [...existingWorkouts, ...testWorkouts];
+        localStorage.setItem('workouts', JSON.stringify(updatedWorkouts));
+
+        showMessage(`✅ 成功添加 ${testWorkouts.length} 条训练记录！现在可以查看健康评估了。`, 'success');
+
+      } catch (error) {
+        showMessage('❌ 添加数据失败: ' + error.message, 'info');
+      }
+    });
+
+    // 清除数据
+    document.getElementById('clearDataBtn').addEventListener('click', () => {
+      if (confirm('确定要清除所有训练数据吗？此操作不可恢复。')) {
+        localStorage.removeItem('workouts');
+        showMessage('✅ 所有训练数据已清除', 'info');
+      }
+    });
+
+    // 查看分析页面
+    document.getElementById('viewAnalyticsBtn').addEventListener('click', () => {
+      window.location.href = '/data/analytics';
+    });
+  </script>
+</body>
+</html>

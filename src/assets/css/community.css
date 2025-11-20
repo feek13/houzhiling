@@ -1,0 +1,1881 @@
+/**
+ * Community.css - 社区Feed流样式
+ *
+ * 社交媒体风格的社区界面样式
+ */
+
+/* ==================== 容器布局 ==================== */
+
+.community-view {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0e1a2a, #050b14);
+}
+
+.community-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.community-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ==================== Header ==================== */
+
+.community-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(10, 16, 30, 0.95);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.community-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e5e9f0;
+  margin: 0;
+}
+
+.btn-new-post {
+  padding: 0.75rem 1.5rem;
+  background: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-new-post:hover {
+  background: #1a8cd8;
+}
+
+/* ==================== Tabs ==================== */
+
+.community-tabs {
+  display: flex;
+  background: rgba(10, 16, 30, 0.95);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+}
+
+.community-tabs .tab-btn {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #94a3b8;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.community-tabs .tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.community-tabs .tab-btn.active {
+  color: #33e0a1;
+  border-bottom-color: #33e0a1;
+}
+
+/* ==================== Filter Indicator ==================== */
+
+.filter-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: #e8f5fe;
+  border-bottom: 1px solid #1da1f2;
+}
+
+.filter-indicator span {
+  color: #1da1f2;
+  font-weight: 600;
+}
+
+.btn-clear-filter {
+  padding: 0.25rem 0.75rem;
+  background: transparent;
+  border: 1px solid #1da1f2;
+  border-radius: 9999px;
+  color: #1da1f2;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-clear-filter:hover {
+  background: #1da1f2;
+  color: white;
+}
+
+/* ==================== Feed ==================== */
+
+.community-feed {
+  background: transparent;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.empty-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+/* ==================== Post Card ==================== */
+
+.post-card {
+  padding: 1rem 1.5rem;
+  background: rgba(10, 16, 30, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.post-card:hover {
+  background: rgba(10, 16, 30, 0.8);
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.post-header .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.author-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.author-name {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 700;
+  color: #e5e9f0;
+  font-size: 0.9375rem;
+}
+
+.author-name .verified {
+  color: #1da1f2;
+  font-size: 0.875rem;
+}
+
+.post-time {
+  font-size: 0.9375rem;
+  color: #94a3b8;
+}
+
+.btn-delete-post {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  color: #536471;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.btn-delete-post:hover {
+  background: #fee;
+  color: #f4212e;
+}
+
+/* ==================== Post Content ==================== */
+
+.post-content {
+  margin: 0.75rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #e5e9f0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.post-content .hashtag {
+  color: #33e0a1;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.post-content .hashtag:hover {
+  text-decoration: underline;
+}
+
+/* ==================== Repost Indicator ==================== */
+
+.repost-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #536471;
+  font-size: 0.8125rem;
+}
+
+.repost-indicator i {
+  color: #00ba7c;
+}
+
+.original-post {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  background: #f7f9fa;
+}
+
+.original-author {
+  font-weight: 600;
+  color: #14171a;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.original-content {
+  font-size: 0.875rem;
+  color: #536471;
+  line-height: 1.4;
+}
+
+/* ==================== Workout Card ==================== */
+
+.workout-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.workout-card i {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+.workout-info {
+  flex: 1;
+}
+
+.workout-type {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-bottom: 0.25rem;
+}
+
+.workout-stats {
+  font-size: 0.8125rem;
+  opacity: 0.9;
+}
+
+/* ==================== Post Stats ==================== */
+
+.post-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+  color: #536471;
+}
+
+.post-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ==================== Post Actions ==================== */
+
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.post-actions button {
+  flex: 1;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  color: #536471;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.post-actions button:hover {
+  background: #f7f9fa;
+}
+
+.btn-comment:hover {
+  color: #1da1f2;
+}
+
+.btn-repost:hover {
+  color: #00ba7c;
+}
+
+.btn-like:hover {
+  color: #f91880;
+}
+
+.btn-like.liked {
+  color: #f91880;
+}
+
+.btn-like.liked i {
+  animation: like-pulse 0.3s ease;
+}
+
+@keyframes like-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.btn-bookmark:hover {
+  color: #1da1f2;
+}
+
+.btn-bookmark.bookmarked {
+  color: #1da1f2;
+}
+
+/* ==================== Modals ==================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001 !important;
+  padding: 1rem;
+  opacity: 1;
+  visibility: visible;
+}
+
+.community-modal {
+  background: rgba(10, 16, 30, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modal-appear 0.2s ease;
+}
+
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e5e9f0;
+}
+
+.btn-close-modal {
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-close-modal:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== New Post Modal ==================== */
+
+/* ==================== New Post Modal (X-Style) ==================== */
+
+.new-post-modal.x-style {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-post-modal.x-style .modal-header {
+  border-bottom: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-post-modal.x-style .btn-close-modal {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.new-post-modal.x-style .btn-close-modal:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.new-post-modal.x-style .btn-publish {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+.new-post-modal.x-style .modal-body {
+  padding: 0 1rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.post-composer {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+}
+
+.composer-avatar img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.composer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-post-modal.x-style textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem 0;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #e5e9f0;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.new-post-modal.x-style textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.new-post-modal.x-style textarea::placeholder {
+  color: #536471;
+}
+
+.new-post-modal.x-style .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-icon-tool {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #1da1f2;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-icon-tool:hover {
+  background: rgba(29, 161, 242, 0.1);
+}
+
+.btn-icon-tool:disabled {
+  color: #536471;
+  cursor: not-allowed;
+}
+
+.char-counter-wrapper {
+  font-size: 0.875rem;
+  color: #536471;
+  font-weight: 500;
+}
+
+/* Image Preview Grid in Composer */
+.composer-content .image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.composer-content .image-preview-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+}
+
+.composer-content .image-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.composer-content .btn-remove-image {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.composer-content .btn-remove-image:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Workout Preview in Composer */
+.composer-content .workout-preview-container {
+  margin-top: 1rem;
+}
+
+/* ==================== Comments Modal ==================== */
+
+.comments-list {
+  margin-bottom: 1rem;
+}
+
+.empty-comments {
+  text-align: center;
+  color: #536471;
+  padding: 2rem 0;
+}
+
+.comment {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #14171a;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.comment-text {
+  font-size: 0.9375rem;
+  color: #14171a;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.comment-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: #536471;
+}
+
+.comment-time {
+  color: #536471;
+}
+
+.comment-likes {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-delete-comment {
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: none;
+  color: #f4212e;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  transition: opacity 0.2s;
+}
+
+.btn-delete-comment:hover {
+  opacity: 0.7;
+}
+
+.comment-input {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e1e8ed;
+}
+
+.comment-input textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(5, 11, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: #e5e9f0;
+  margin-bottom: 0.75rem;
+  resize: vertical;
+}
+
+.comment-input textarea:focus {
+  outline: none;
+  border-color: #33e0a1;
+}
+
+.btn-submit-comment {
+  width: 100%;
+  padding: 0.75rem;
+  background: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit-comment:hover {
+  background: #1a8cd8;
+}
+
+/* ==================== Repost Menu ==================== */
+
+.repost-menu {
+  background: rgba(10, 16, 30, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.repost-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  color: #e5e9f0;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.9375rem;
+}
+
+.repost-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.repost-option i {
+  color: #00ba7c;
+}
+
+/* ==================== Quote Repost Modal ==================== */
+
+.quote-repost-modal textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem;
+  background: rgba(5, 11, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #e5e9f0;
+  margin-bottom: 1rem;
+  resize: vertical;
+}
+
+.quote-repost-modal textarea:focus {
+  outline: none;
+  border-color: #33e0a1;
+}
+
+.original-post-preview {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.original-post-preview .post-card {
+  background: #f7f9fa;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  cursor: default;
+}
+
+/* ==================== Buttons ==================== */
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9375rem;
+}
+
+.btn-primary {
+  background: #1da1f2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1a8cd8;
+}
+
+.btn-primary:disabled {
+  background: #aab8c2;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #e5e9f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ==================== User Profile Modal ==================== */
+
+.user-profile-modal .modal-body {
+  padding: 0;
+}
+
+.user-profile-header {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.user-profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.user-profile-info {
+  flex: 1;
+}
+
+.user-profile-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #14171a;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-profile-name .verified {
+  color: #1da1f2;
+  font-size: 1rem;
+}
+
+.user-level {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.user-bio {
+  color: #536471;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.user-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #14171a;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #536471;
+  margin-top: 0.25rem;
+}
+
+.user-actions {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e1e8ed;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.user-actions .btn {
+  flex: 1;
+}
+
+.btn-unfollow {
+  background: transparent;
+  color: #f4212e;
+  border: 1px solid #f4212e;
+}
+
+.btn-unfollow:hover {
+  background: #fff0f1;
+}
+
+.user-posts-section {
+  padding: 1.5rem;
+}
+
+.user-posts-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  color: #14171a;
+}
+
+.user-posts-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.user-posts-list .post-card {
+  margin-bottom: 1rem;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.user-posts-list .post-card:last-child {
+  margin-bottom: 0;
+}
+
+.empty-posts {
+  text-align: center;
+  color: #536471;
+  padding: 2rem 0;
+  font-size: 0.9375rem;
+}
+
+.user-avatar:hover,
+.user-profile-link:hover {
+  opacity: 0.8;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .community-container {
+    max-width: 100%;
+  }
+
+  .community-header {
+    padding: 1rem;
+  }
+
+  .community-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .btn-new-post {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .community-tabs .tab-btn {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .post-card {
+    padding: 1rem;
+  }
+
+  .post-header .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-actions {
+    gap: 0.25rem;
+  }
+
+  .post-actions button {
+    font-size: 0.8125rem;
+    padding: 0.4rem;
+  }
+
+  .modal {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    margin-top: auto;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .modal-footer {
+    padding: 1rem;
+  }
+}
+
+/* ==================== Dark Mode (Optional) ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .community-view {
+    background: #15202b;
+  }
+
+  .community-header,
+  .community-feed,
+  .modal {
+    background: #192734;
+    border-color: #38444d;
+  }
+
+  .community-tabs {
+    background: #192734;
+    border-bottom-color: #38444d;
+  }
+
+  .community-tabs .tab-btn {
+    color: #8899a6;
+  }
+
+  .community-tabs .tab-btn:hover {
+    background: #22303c;
+  }
+
+  .post-card {
+    border-bottom-color: #38444d;
+  }
+
+  .post-card:hover {
+    background: #22303c;
+  }
+
+  .author-name,
+  .post-content,
+  .comment-author,
+  .comment-text,
+  .modal-header h3 {
+    color: #f7f9fa;
+  }
+
+  .post-time,
+  .post-stats,
+  .comment-time,
+  .comment-likes {
+    color: #8899a6;
+  }
+
+  .original-post {
+    background: #22303c;
+    border-color: #38444d;
+  }
+
+  .btn-close-modal:hover {
+    background: #22303c;
+  }
+
+  .new-post-modal textarea,
+  .comment-input textarea,
+  .quote-repost-modal textarea {
+    background: #22303c;
+    border-color: #38444d;
+    color: #f7f9fa;
+  }
+
+  .btn-secondary {
+    border-color: #38444d;
+    color: #f7f9fa;
+  }
+
+  .btn-secondary:hover {
+    background: #22303c;
+  }
+
+  .repost-menu {
+    background: #192734;
+    border-color: #38444d;
+  }
+
+  .repost-option {
+    background: #192734;
+  }
+
+  .repost-option:hover {
+    background: #22303c;
+  }
+}
+
+/* ==================== 图片上传功能 ==================== */
+
+.image-upload-container {
+  margin-top: 1rem;
+}
+
+.image-upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #cbd6e2;
+  border-radius: 12px;
+  background: #f7f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-upload-dropzone:hover {
+  border-color: #1da1f2;
+  background: #e8f5fe;
+}
+
+.image-upload-dropzone.dragover {
+  border-color: #1da1f2;
+  background: #e8f5fe;
+  transform: scale(1.02);
+}
+
+.image-upload-dropzone i {
+  font-size: 2.5rem;
+  color: #657786;
+  margin-bottom: 0.5rem;
+}
+
+.image-upload-dropzone p {
+  margin: 0.25rem 0;
+  color: #657786;
+}
+
+.upload-hint {
+  font-size: 0.875rem;
+  color: #aab8c2;
+}
+
+.upload-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e1e8ed;
+}
+
+.btn-upload-image {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid #cbd6e2;
+  border-radius: 8px;
+  color: #1da1f2;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-upload-image:hover {
+  background: #e8f5fe;
+  border-color: #1da1f2;
+}
+
+.btn-upload-image:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.upload-status {
+  font-size: 0.875rem;
+  color: #657786;
+}
+
+/* 图片预览网格 */
+.image-preview-grid {
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.image-preview-grid.show {
+  display: grid;
+}
+
+.image-preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f7f9fa;
+}
+
+.image-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove-image {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btn-remove-image:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+/* 帖子中的图片展示 */
+.post-images {
+  margin-top: 0.75rem;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  gap: 2px;
+}
+
+/* 单张图片 */
+.post-images.single {
+  grid-template-columns: 1fr;
+  max-height: 500px;
+}
+
+.post-images.single .post-image-item {
+  aspect-ratio: auto;
+  max-height: 500px;
+}
+
+/* 两张图片 */
+.post-images.double {
+  grid-template-columns: repeat(2, 1fr);
+  max-height: 300px;
+}
+
+.post-images.double .post-image-item {
+  aspect-ratio: 1;
+}
+
+/* 三张图片 */
+.post-images.triple {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-height: 400px;
+}
+
+.post-images.triple .post-image-item:first-child {
+  grid-row: 1 / 3;
+  aspect-ratio: 1;
+}
+
+.post-images.triple .post-image-item:not(:first-child) {
+  aspect-ratio: 1;
+}
+
+/* 四张图片 */
+.post-images.quad {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-height: 400px;
+}
+
+.post-images.quad .post-image-item {
+  aspect-ratio: 1;
+}
+
+.post-image-item {
+  position: relative;
+  background: #f7f9fa;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.post-image-item:hover {
+  transform: scale(1.02);
+}
+
+.post-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 响应式调整 */
+@media (max-width: 640px) {
+  .image-upload-dropzone {
+    padding: 1.5rem;
+  }
+
+  .image-upload-dropzone i {
+    font-size: 2rem;
+  }
+
+  .post-images.single {
+    max-height: 400px;
+  }
+
+  .post-images.double,
+  .post-images.triple,
+  .post-images.quad {
+    max-height: 300px;
+  }
+}
+
+/* ==================== 图片画廊 Lightbox ==================== */
+
+.image-gallery-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.gallery-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.gallery-image-container {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-image-container img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.gallery-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10001;
+  font-size: 1.25rem;
+}
+
+.gallery-close:hover {
+  background: rgba(220, 38, 38, 0.8);
+  transform: scale(1.1);
+}
+
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10001;
+  font-size: 1.25rem;
+}
+
+.gallery-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-prev {
+  left: 1.5rem;
+}
+
+.gallery-next {
+  right: 1.5rem;
+}
+
+.gallery-counter {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 10001;
+}
+
+/* Lightbox响应式 */
+@media (max-width: 640px) {
+  .gallery-content {
+    padding: 1rem;
+  }
+
+  .gallery-close {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .gallery-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .gallery-prev {
+    left: 1rem;
+  }
+
+  .gallery-next {
+    right: 1rem;
+  }
+
+  .gallery-counter {
+    bottom: 1.5rem;
+  }
+
+  .gallery-image-container {
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+
+  .gallery-image-container img {
+    max-height: 85vh;
+  }
+}
+
+/* ==================== Workout Preview Styles ==================== */
+
+.workout-preview-container {
+  margin-top: 1rem;
+}
+
+.workout-preview-card {
+  background: #f7f9fa;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.workout-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #e8f5fe;
+  border-bottom: 1px solid #d6ebf7;
+  font-weight: 600;
+  color: #1da1f2;
+}
+
+.workout-preview-header i {
+  font-size: 1rem;
+}
+
+.btn-remove-workout {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #657786;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-workout:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #14171a;
+}
+
+.workout-preview-body {
+  padding: 1rem;
+}
+
+.workout-preview-title {
+  font-weight: 600;
+  color: #14171a;
+  margin-bottom: 0.5rem;
+}
+
+.workout-preview-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #657786;
+}
+
+.workout-preview-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.workout-preview-stats i {
+  font-size: 0.875rem;
+}
+
+/* ==================== Workout Selector Modal ==================== */
+
+.workout-selector-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.workout-selector-modal .modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0;
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.workout-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e1e8ed;
+  transition: background 0.2s ease;
+}
+
+.workout-item:hover {
+  background: #f7f9fa;
+}
+
+.workout-item:last-child {
+  border-bottom: none;
+}
+
+.workout-item-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.workout-item-info {
+  flex: 1;
+}
+
+.workout-item-title {
+  font-weight: 600;
+  color: #14171a;
+  margin-bottom: 0.25rem;
+}
+
+.workout-item-meta {
+  font-size: 0.875rem;
+  color: #657786;
+}
+
+.btn-select-workout {
+  padding: 0.5rem 1rem;
+  background: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-select-workout:hover {
+  background: #1a91da;
+}
+
+.btn-attach-workout {
+  background: transparent;
+  color: #1da1f2;
+  transition: all 0.2s ease;
+}
+
+.btn-attach-workout:hover {
+  background: #e8f5fe;
+  color: #1a91da;
+}
+
+/* ==================== Post Workout Card ==================== */
+
+.post-card .workout-card {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post-card .workout-card i {
+  font-size: 2rem;
+  opacity: 0.9;
+}
+
+.post-card .workout-info {
+  flex: 1;
+}
+
+.post-card .workout-type {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+}
+
+.post-card .workout-stats {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .workout-selector-modal {
+    max-width: 95vw;
+  }
+
+  .workout-item {
+    padding: 0.75rem;
+  }
+
+  .workout-item-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+}
+
+/* ==================== Markdown Styling ==================== */
+
+.post-content strong,
+.original-content strong {
+  font-weight: 700;
+  color: #14171a;
+}
+
+.post-content em,
+.original-content em {
+  font-style: italic;
+  color: #14171a;
+}
+
+.post-content code,
+.original-content code {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.post-content code.code-inline,
+.original-content code.code-inline {
+  background: #f7f9fa;
+  color: #e01e5a;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #e1e8ed;
+}
+
+.post-content code.code-block,
+.original-content code.code-block {
+  display: block;
+  background: #f7f9fa;
+  color: #14171a;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+.post-content br,
+.original-content br {
+  display: block;
+  content: "";
+  margin: 0.25em 0;
+}
+
+/* Markdown in comments */
+.comment-text strong {
+  font-weight: 700;
+}
+
+.comment-text em {
+  font-style: italic;
+}
+
+.comment-text code.code-inline {
+  background: #f7f9fa;
+  color: #e01e5a;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.comment-text code.code-block {
+  display: block;
+  background: #f7f9fa;
+  color: #14171a;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin: 0.25rem 0;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  white-space: pre-wrap;
+}

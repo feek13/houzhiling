@@ -1,0 +1,460 @@
+/**
+ * OAuth 登录样式
+ */
+
+/* 认证表单基础样式 */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.auth-form h3 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.auth-form input,
+.auth-form textarea {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.auth-form input:focus,
+.auth-form textarea:focus {
+  outline: none;
+  border-color: var(--accent, #43e97b);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(67, 233, 123, 0.1);
+}
+
+.auth-form .muted {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: -8px 0 0 0;
+}
+
+.auth-form .error-box {
+  padding: 12px 16px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 14px;
+  text-align: center;
+  min-height: 20px;
+}
+
+.auth-form .error-box:empty {
+  display: none;
+}
+
+.auth-form .strength-meter {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-form .strength-meter[data-score="0"],
+.auth-form .strength-meter[data-score="1"] {
+  color: #ff6b6b;
+}
+
+.auth-form .strength-meter[data-score="2"] {
+  color: #ffd93d;
+}
+
+.auth-form .strength-meter[data-score="3"] {
+  color: #6bcf7f;
+}
+
+.auth-form .strength-meter[data-score="4"],
+.auth-form .strength-meter[data-score="5"] {
+  color: #43e97b;
+}
+
+.auth-form button[type="submit"] {
+  margin-top: 8px;
+}
+
+.auth-form .link-like {
+  background: none;
+  border: none;
+  color: var(--accent, #43e97b);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.auth-form .link-like:hover {
+  opacity: 0.8;
+}
+
+.oauth-container {
+  margin: 24px 0;
+}
+
+.oauth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* OAuth 按钮 */
+.oauth-btn {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.oauth-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--oauth-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.oauth-btn:hover::before {
+  opacity: 0.1;
+}
+
+.oauth-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--oauth-color);
+  box-shadow: 0 8px 24px rgba(var(--oauth-color-rgb, 67, 233, 123), 0.2);
+}
+
+.oauth-btn:active {
+  transform: translateY(0);
+}
+
+.oauth-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.oauth-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.oauth-icon {
+  font-size: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.oauth-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* 特定提供商的样式 */
+.oauth-btn[data-provider="github"] {
+  --oauth-color: #24292e;
+  --oauth-color-rgb: 36, 41, 46;
+}
+
+.oauth-btn[data-provider="google"] {
+  --oauth-color: #4285f4;
+  --oauth-color-rgb: 66, 133, 244;
+}
+
+.oauth-btn[data-provider="facebook"] {
+  --oauth-color: #1877f2;
+  --oauth-color-rgb: 24, 119, 242;
+}
+
+/* 分隔符 */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  text-align: center;
+  position: relative;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+}
+
+.auth-divider span {
+  padding: 0 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* OAuth 状态指示器 */
+.oauth-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  background: rgba(67, 233, 123, 0.1);
+  border: 1px solid rgba(67, 233, 123, 0.3);
+  border-radius: 12px;
+}
+
+.oauth-status.error {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.oauth-status-icon {
+  font-size: 24px;
+}
+
+.oauth-status-text {
+  flex: 1;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.oauth-status-text strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.oauth-disconnect-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.oauth-disconnect-btn:hover {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+/* 加载动画 */
+@keyframes oauth-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.oauth-btn.loading .oauth-icon {
+  animation: oauth-spin 1s linear infinite;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .oauth-btn {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .oauth-icon {
+    font-size: 18px;
+  }
+
+  .auth-divider span {
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+/* OAuth 管理面板 */
+.oauth-manager {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  margin: 24px 0;
+}
+
+.oauth-manager h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.oauth-connections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.oauth-connection-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.oauth-connection-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.oauth-connection-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.oauth-connection-info {
+  flex: 1;
+}
+
+.oauth-connection-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2px;
+}
+
+.oauth-connection-status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.oauth-connection-status.connected {
+  color: #43e97b;
+}
+
+.oauth-connection-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.oauth-connection-btn {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.oauth-connection-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.oauth-connection-btn.danger:hover {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+/* OAuth 权限说明 */
+.oauth-permissions {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border-left: 3px solid rgba(67, 233, 123, 0.5);
+}
+
+.oauth-permissions h5 {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.oauth-permissions ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.oauth-permissions li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  position: relative;
+}
+
+.oauth-permissions li::before {
+  content: '✓';
+  position: absolute;
+  left: -20px;
+  color: #43e97b;
+  font-weight: bold;
+}

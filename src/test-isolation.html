@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户隔离测试</title>
+    <style>
+        body {
+            background-color: #0a101e;
+            color: #fff;
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        #results {
+            background: #111;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+
+        .log {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .info {
+            color: #aaa;
+        }
+
+        .success {
+            background: rgba(51, 224, 161, 0.1);
+            color: #33e0a1;
+        }
+
+        .error {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>用户隔离功能验证</h1>
+        <div id="results"></div>
+    </div>
+    <script type="module" src="./assets/js/verifyIsolation.js"></script>
+</body>
+
+</html>

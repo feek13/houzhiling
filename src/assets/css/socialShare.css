@@ -1,0 +1,421 @@
+/**
+ * 社交媒体分享样式
+ */
+
+.social-share-menu {
+  padding: 24px;
+  max-width: 500px;
+}
+
+.social-share-menu h3 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+/* 分享平台网格 */
+.share-platforms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.share-platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.share-platform-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--platform-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.share-platform-btn:hover::before {
+  opacity: 0.1;
+}
+
+.share-platform-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--platform-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.share-platform-btn:active {
+  transform: translateY(-2px);
+}
+
+.platform-icon {
+  font-size: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.platform-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* 微信分享模态框 */
+.wechat-share-modal {
+  padding: 24px;
+  text-align: center;
+}
+
+.wechat-share-modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.qrcode-placeholder {
+  margin: 24px 0;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}
+
+.qr-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.qrcode-placeholder p {
+  margin: 8px 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.qrcode-placeholder input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+.qrcode-placeholder input:focus {
+  outline: none;
+  border-color: rgba(67, 233, 123, 0.5);
+  background: rgba(67, 233, 123, 0.1);
+}
+
+/* 分享按钮（内联使用） */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.2) 0%,
+    rgba(56, 249, 215, 0.1) 100%
+  );
+  border: 2px solid rgba(67, 233, 123, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(67, 233, 123, 0.5);
+  box-shadow: 0 8px 24px rgba(67, 233, 123, 0.2);
+}
+
+.share-btn:active {
+  transform: translateY(0);
+}
+
+.share-btn-icon {
+  font-size: 18px;
+}
+
+/* 快速分享按钮组 */
+.quick-share-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.quick-share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.quick-share-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.quick-share-btn:hover::after {
+  opacity: 1;
+}
+
+.quick-share-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--platform-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.quick-share-btn[data-platform="twitter"] {
+  --platform-color: #1da1f2;
+}
+
+.quick-share-btn[data-platform="facebook"] {
+  --platform-color: #1877f2;
+}
+
+.quick-share-btn[data-platform="wechat"] {
+  --platform-color: #07c160;
+}
+
+.quick-share-btn[data-platform="weibo"] {
+  --platform-color: #e6162d;
+}
+
+.quick-share-btn[data-platform="qq"] {
+  --platform-color: #12b7f5;
+}
+
+/* 分享成功提示 */
+.share-success-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 24px;
+  background: rgba(67, 233, 123, 0.95);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(67, 233, 123, 0.4);
+  animation: slideUpFade 0.3s ease;
+  z-index: 10000;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 分享统计 */
+.share-stats {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.share-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.share-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #43e97b;
+  margin-bottom: 4px;
+}
+
+.share-stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 分享历史 */
+.share-history {
+  margin-top: 24px;
+}
+
+.share-history h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.share-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.share-history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.share-history-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.share-history-info {
+  flex: 1;
+}
+
+.share-history-platform {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.share-history-time {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .share-platforms {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .share-platform-btn {
+    padding: 16px 8px;
+  }
+
+  .platform-icon {
+    font-size: 28px;
+  }
+
+  .platform-name {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .share-platforms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .social-share-menu {
+    padding: 20px 16px;
+  }
+
+  .wechat-share-modal {
+    padding: 20px 16px;
+  }
+
+  .qrcode-placeholder {
+    padding: 24px 16px;
+  }
+
+  .quick-share-buttons {
+    gap: 6px;
+  }
+
+  .quick-share-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+/* 原生分享按钮（Web Share API） */
+.native-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg,
+    rgba(67, 233, 123, 0.2) 0%,
+    rgba(56, 249, 215, 0.1) 100%
+  );
+  border: 2px solid rgba(67, 233, 123, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.native-share-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(67, 233, 123, 0.5);
+  box-shadow: 0 8px 24px rgba(67, 233, 123, 0.2);
+}
+
+.native-share-btn span {
+  font-size: 20px;
+}
