@@ -22,6 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Prepare for GitHub Pages
+        run: |
+          # 为 GitHub Pages 修改 base href
+          sed -i 's|<base href="/" />|<base href="/houzhiling/" />|g' src/index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
