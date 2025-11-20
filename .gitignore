@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
-package-lock.json
+
+# Only ignore alternative lock files (we use npm)
 yarn.lock
 pnpm-lock.yaml
 
