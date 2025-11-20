@@ -1,74 +1,74 @@
-# FitSpark Deployment Guide
+# FitSpark 部署指南
 
-Complete guide to deploying FitSpark with CI/CD pipelines, hosting options, and best practices.
+FitSpark 的完整部署指南，包括 CI/CD 流水线、托管选项和最佳实践。
 
-## Table of Contents
+## 目录
 
-- [Quick Start](#quick-start)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Deployment Options](#deployment-options)
-- [Environment Setup](#environment-setup)
-- [Production Build](#production-build)
-- [Monitoring](#monitoring)
-- [Rollback Strategy](#rollback-strategy)
-- [Troubleshooting](#troubleshooting)
+- [快速开始](#快速开始)
+- [CI/CD 流水线](#cicd-流水线)
+- [部署选项](#部署选项)
+- [环境配置](#环境配置)
+- [生产构建](#生产构建)
+- [监控](#监控)
+- [回滚策略](#回滚策略)
+- [故障排查](#故障排查)
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前置要求
 
-- Node.js 18+ installed
-- Git repository setup
-- GitHub account (for CI/CD)
+- 已安装 Node.js 18+
+- 已配置 Git 仓库
+- GitHub 账号（用于 CI/CD）
 
-### Local Development
+### 本地开发
 
 ```bash
-# Clone repository
+# 克隆仓库
 git clone https://github.com/yourusername/fitspark.git
 cd fitspark
 
-# Install dependencies
+# 安装依赖
 npm install
 
-# Start development server
+# 启动开发服务器
 npm run dev
 
-# Open browser
+# 打开浏览器
 open http://localhost:3000
 ```
 
-### Production Deployment
+### 生产部署
 
 ```bash
-# Run tests
+# 运行测试
 npm test
 
-# Build for production
+# 生产构建
 npm run build
 
-# Deploy
+# 部署
 npm run deploy
 ```
 
-## CI/CD Pipeline
+## CI/CD 流水线
 
-FitSpark uses GitHub Actions for continuous integration and deployment.
+FitSpark 使用 GitHub Actions 实现持续集成和部署。
 
-### Workflows
+### 工作流
 
-#### 1. CI Workflow (`.github/workflows/ci.yml`)
+#### 1. CI 工作流 (`.github/workflows/ci.yml`)
 
-Runs on every push and pull request to `main` and `develop` branches.
+在每次推送和拉取请求到 `main` 和 `develop` 分支时运行。
 
-**Stages:**
-1. **Lint & Format** - Code quality checks
-2. **Test** - Unit and integration tests
-3. **Build** - Verify build succeeds
-4. **Security** - npm audit for vulnerabilities
-5. **Performance** - Lighthouse CI checks
+**阶段：**
+1. **代码检查与格式化** - 代码质量检查
+2. **测试** - 单元和集成测试
+3. **构建** - 验证构建成功
+4. **安全** - npm audit 漏洞检查
+5. **性能** - Lighthouse CI 检查
 
-**Triggers:**
+**触发条件：**
 ```yaml
 on:
   push:
@@ -77,102 +77,102 @@ on:
     branches: [ main, develop ]
 ```
 
-#### 2. Deploy Workflow (`.github/workflows/deploy.yml`)
+#### 2. 部署工作流 (`.github/workflows/deploy.yml`)
 
-Deploys to production on merges to `main`.
+在合并到 `main` 时部署到生产环境。
 
-**Stages:**
-1. **Deploy** - Build and deploy to hosting
-2. **Release** - Create GitHub release
-3. **Notify** - Send deployment notifications
+**阶段：**
+1. **部署** - 构建并部署到托管平台
+2. **发布** - 创建 GitHub 发布
+3. **通知** - 发送部署通知
 
-**Triggers:**
+**触发条件：**
 ```yaml
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:  # 手动触发
 ```
 
-### Setup GitHub Actions
+### 配置 GitHub Actions
 
-1. **Enable Actions:**
-   - Go to repository Settings → Actions
-   - Enable "Allow all actions and reusable workflows"
+1. **启用 Actions:**
+   - 前往仓库 Settings → Actions
+   - 启用 "Allow all actions and reusable workflows"
 
-2. **Configure Secrets:**
+2. **配置 Secrets:**
    ```
    Settings → Secrets and variables → Actions → New repository secret
    ```
 
-   Required secrets:
-   - `DEPLOY_TOKEN` - Deployment authentication
-   - `CODECOV_TOKEN` - Code coverage reports (optional)
+   需要的 secrets:
+   - `DEPLOY_TOKEN` - 部署认证令牌
+   - `CODECOV_TOKEN` - 代码覆盖率报告（可选）
 
-3. **Status Badges:**
-   Add to README.md:
+3. **状态徽章:**
+   添加到 README.md:
    ```markdown
    ![CI](https://github.com/yourusername/fitspark/workflows/CI/badge.svg)
    ![Deploy](https://github.com/yourusername/fitspark/workflows/Deploy/badge.svg)
    ```
 
-### Workflow Files
+### 工作流文件
 
-The workflows are already configured in:
-- `.github/workflows/ci.yml` - Continuous Integration
-- `.github/workflows/deploy.yml` - Deployment
+工作流已配置在：
+- `.github/workflows/ci.yml` - 持续集成
+- `.github/workflows/deploy.yml` - 部署
 
-## Deployment Options
+## 部署选项
 
-### Option 1: GitHub Pages (Recommended)
+### 选项 1: GitHub Pages (推荐)
 
-**Pros:**
-- Free hosting
-- HTTPS by default
-- Easy setup
-- Automatic deployments
+**优点：**
+- 免费托管
+- 默认 HTTPS
+- 简单配置
+- 自动部署
 
-**Setup:**
+**配置：**
 
-1. Enable GitHub Pages:
+1. 启用 GitHub Pages:
    ```
    Repository Settings → Pages
    Source: gh-pages branch
    ```
 
-2. Configure custom domain (optional):
+2. 配置自定义域名（可选）:
    ```
    Settings → Pages → Custom domain: fitspark.example.com
    ```
 
-3. Add CNAME record in DNS:
+3. 添加 CNAME 记录到 DNS:
    ```
    CNAME fitspark.example.com → yourusername.github.io
    ```
 
-4. Deploy workflow handles the rest automatically!
+4. 部署工作流会自动处理其余部分！
 
-### Option 2: Netlify
+### 选项 2: Netlify
 
-**Pros:**
-- Easy deployment
-- Automatic HTTPS
-- Serverless functions
-- Form handling
+**优点：**
+- 简单部署
+- 自动 HTTPS
+- 无服务器函数
+- 表单处理
 
-**Setup:**
+**配置：**
 
-1. Install Netlify CLI:
+1. 安装 Netlify CLI:
    ```bash
    npm install -g netlify-cli
    ```
 
-2. Initialize:
+2. 初始化:
    ```bash
    netlify init
    ```
 
-3. Configure `netlify.toml`:
+3. 配置 `netlify.toml`:
    ```toml
    [build]
      publish = "src"
@@ -184,45 +184,45 @@ The workflows are already configured in:
      status = 200
    ```
 
-4. Deploy:
+4. 部署:
    ```bash
    netlify deploy --prod
    ```
 
-### Option 3: Vercel
+### 选项 3: Vercel
 
-**Pros:**
-- Excellent performance
-- Edge network
-- Preview deployments
-- Zero config
+**优点：**
+- 出色的性能
+- 边缘网络
+- 预览部署
+- 零配置
 
-**Setup:**
+**配置：**
 
-1. Install Vercel CLI:
+1. 安装 Vercel CLI:
    ```bash
    npm install -g vercel
    ```
 
-2. Deploy:
+2. 部署:
    ```bash
    vercel
    ```
 
-3. Follow prompts to configure
+3. 按提示配置
 
-### Option 4: Self-hosted
+### 选项 4: 自托管
 
-**For production servers:**
+**生产服务器：**
 
 ```bash
-# Install nginx
+# 安装 nginx
 sudo apt install nginx
 
-# Configure nginx
+# 配置 nginx
 sudo nano /etc/nginx/sites-available/fitspark
 
-# Add configuration:
+# 添加配置：
 server {
     listen 80;
     server_name fitspark.example.com;
@@ -233,26 +233,26 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    # Enable gzip
+    # 启用 gzip
     gzip on;
     gzip_types text/plain text/css application/json application/javascript;
 }
 
-# Enable site
+# 启用站点
 sudo ln -s /etc/nginx/sites-available/fitspark /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 
-# SSL with Let's Encrypt
+# 使用 Let's Encrypt 配置 SSL
 sudo apt install certbot python3-certbot-nginx
 sudo certbot --nginx -d fitspark.example.com
 ```
 
-## Environment Setup
+## 环境配置
 
-### Environment Variables
+### 环境变量
 
-Create `.env` files for different environments:
+为不同环境创建 `.env` 文件：
 
 **`.env.development`:**
 ```env
@@ -270,7 +270,7 @@ ANALYTICS_ENABLED=true
 DEBUG=false
 ```
 
-### Configuration Management
+### 配置管理
 
 ```javascript
 // config.js
@@ -290,40 +290,40 @@ const config = {
 export default config[process.env.NODE_ENV || 'development'];
 ```
 
-## Production Build
+## 生产构建
 
-### Build Optimization
+### 构建优化
 
-1. **Minification:**
+1. **压缩：**
    ```bash
-   # Install terser for JS minification
+   # 安装 terser 用于 JS 压缩
    npm install -D terser
 
-   # Minify JavaScript
+   # 压缩 JavaScript
    npx terser src/assets/js/app.js -c -m -o dist/app.min.js
    ```
 
-2. **CSS Optimization:**
+2. **CSS 优化：**
    ```bash
-   # Install cssnano
+   # 安装 cssnano
    npm install -D cssnano postcss-cli
 
-   # Minify CSS
+   # 压缩 CSS
    npx postcss src/assets/css/*.css --use cssnano -d dist/css
    ```
 
-3. **Image Optimization:**
+3. **图片优化：**
    ```bash
-   # Install imagemin
+   # 安装 imagemin
    npm install -D imagemin imagemin-mozjpeg imagemin-pngquant
 
-   # Optimize images
+   # 优化图片
    npx imagemin src/assets/images/* --out-dir=dist/images
    ```
 
-### Build Script
+### 构建脚本
 
-Add to `package.json`:
+添加到 `package.json`:
 
 ```json
 {
@@ -338,48 +338,48 @@ Add to `package.json`:
 }
 ```
 
-### Asset Optimization
+### 资源优化
 
-**Checklist:**
-- [ ] Minify JavaScript
-- [ ] Minify CSS
-- [ ] Optimize images (WebP format)
-- [ ] Enable gzip/brotli compression
-- [ ] Set cache headers
-- [ ] Use CDN for static assets
-- [ ] Implement service worker
-- [ ] Lazy load images
-- [ ] Code splitting
+**清单：**
+- [ ] 压缩 JavaScript
+- [ ] 压缩 CSS
+- [ ] 优化图片（WebP 格式）
+- [ ] 启用 gzip/brotli 压缩
+- [ ] 设置缓存头
+- [ ] 静态资源使用 CDN
+- [ ] 实现 Service Worker
+- [ ] 懒加载图片
+- [ ] 代码分割
 
-## Monitoring
+## 监控
 
-### Performance Monitoring
+### 性能监控
 
 ```javascript
-// Monitor in production
+// 生产环境监控
 if (config.analytics) {
   performanceMonitor.init({
     enabled: true,
     reportInterval: 60000
   });
 
-  // Send metrics to analytics
+  // 发送指标到分析服务
   setInterval(() => {
     const metrics = performanceMonitor.getMetrics();
     sendToAnalytics(metrics);
-  }, 300000); // Every 5 minutes
+  }, 300000); // 每 5 分钟
 }
 ```
 
-### Error Tracking
+### 错误追踪
 
-**Sentry Integration:**
+**Sentry 集成：**
 
 ```javascript
-// Install Sentry
+// 安装 Sentry
 npm install @sentry/browser
 
-// Initialize
+// 初始化
 import * as Sentry from "@sentry/browser";
 
 Sentry.init({
@@ -389,27 +389,27 @@ Sentry.init({
 });
 ```
 
-### Uptime Monitoring
+### 正常运行时间监控
 
-**Services:**
-- [UptimeRobot](https://uptimerobot.com/) - Free uptime monitoring
-- [Pingdom](https://www.pingdom.com/) - Advanced monitoring
-- [StatusCake](https://www.statuscake.com/) - Free tier available
+**服务：**
+- [UptimeRobot](https://uptimerobot.com/) - 免费正常运行时间监控
+- [Pingdom](https://www.pingdom.com/) - 高级监控
+- [StatusCake](https://www.statuscake.com/) - 提供免费层
 
-### Logs
+### 日志
 
 ```javascript
-// Structured logging
+// 结构化日志
 const logger = {
   info: (message, meta = {}) => {
     if (config.debug) {
       console.log('[INFO]', message, meta);
     }
-    // Send to log service in production
+    // 生产环境发送到日志服务
   },
   error: (message, error, meta = {}) => {
     console.error('[ERROR]', message, error, meta);
-    // Send to error tracking service
+    // 发送到错误追踪服务
     if (config.analytics) {
       Sentry.captureException(error, { extra: meta });
     }
@@ -417,235 +417,233 @@ const logger = {
 };
 ```
 
-## Rollback Strategy
+## 回滚策略
 
-### Git-based Rollback
+### 基于 Git 的回滚
 
 ```bash
-# View recent deployments
+# 查看最近的部署
 git log --oneline -10
 
-# Rollback to previous commit
+# 回滚到上一个提交
 git revert HEAD --no-edit
 git push origin main
 
-# Or rollback multiple commits
+# 或回滚多个提交
 git revert HEAD~3..HEAD --no-edit
 git push origin main
 ```
 
-### GitHub Pages Rollback
+### GitHub Pages 回滚
 
 ```bash
-# Checkout previous version
+# 检出先前版本
 git checkout <commit-hash>
 
-# Force push to gh-pages
+# 强制推送到 gh-pages
 git push origin HEAD:gh-pages --force
 ```
 
-### Netlify Rollback
+### Netlify 回滚
 
 ```bash
-# List deployments
+# 列出部署
 netlify deploy:list
 
-# Rollback to specific deployment
+# 回滚到特定部署
 netlify deploy:rollback --deploy-id=<deployment-id>
 ```
 
-### Database Rollback
+### 数据库回滚
 
 ```bash
-# Backup before deployment
+# 部署前备份
 npm run backup:db
 
-# Restore if needed
+# 需要时恢复
 npm run restore:db --backup=<backup-file>
 ```
 
-## Deployment Checklist
+## 部署清单
 
-### Pre-deployment
+### 部署前
 
-- [ ] All tests passing
-- [ ] Code reviewed
-- [ ] Version bumped in package.json
-- [ ] CHANGELOG updated
-- [ ] Environment variables configured
-- [ ] Database migrations tested
-- [ ] Security audit passed
-- [ ] Performance benchmarks met
+- [ ] 所有测试通过
+- [ ] 代码已审查
+- [ ] package.json 中版本已更新
+- [ ] CHANGELOG 已更新
+- [ ] 环境变量已配置
+- [ ] 数据库迁移已测试
+- [ ] 安全审计通过
+- [ ] 性能基准达标
 
-### During Deployment
+### 部署期间
 
-- [ ] Backup current production data
-- [ ] Run database migrations
-- [ ] Deploy new version
-- [ ] Verify deployment successful
-- [ ] Check error rates
-- [ ] Monitor performance metrics
+- [ ] 备份当前生产数据
+- [ ] 运行数据库迁移
+- [ ] 部署新版本
+- [ ] 验证部署成功
+- [ ] 检查错误率
+- [ ] 监控性能指标
 
-### Post-deployment
+### 部署后
 
-- [ ] Smoke tests passed
-- [ ] All critical features working
-- [ ] No error spikes
-- [ ] Performance acceptable
-- [ ] Analytics tracking
-- [ ] Notify team
-- [ ] Update documentation
+- [ ] 冒烟测试通过
+- [ ] 所有关键功能正常
+- [ ] 无错误峰值
+- [ ] 性能可接受
+- [ ] 分析追踪正常
+- [ ] 通知团队
+- [ ] 更新文档
 
-## Troubleshooting
+## 故障排查
 
-### Deployment Fails
+### 部署失败
 
-**Check CI logs:**
+**检查 CI 日志：**
 ```bash
-# View workflow runs
+# 查看工作流运行
 gh run list
 
-# View specific run
+# 查看特定运行
 gh run view <run-id>
 ```
 
-**Common issues:**
-1. **Tests failing** - Fix tests locally first
-2. **Build errors** - Check node version compatibility
-3. **Permission denied** - Verify secrets are configured
+**常见问题：**
+1. **测试失败** - 先在本地修复测试
+2. **构建错误** - 检查 node 版本兼容性
+3. **权限拒绝** - 验证 secrets 已配置
 
-### Site Not Loading
+### 站点无法加载
 
-**Checklist:**
-1. DNS propagation (can take 24-48 hours)
-2. HTTPS certificate issued
-3. Correct branch deployed
-4. Build artifacts present
-5. Server logs for errors
+**清单：**
+1. DNS 传播（可能需要 24-48 小时）
+2. HTTPS 证书已颁发
+3. 正确的分支已部署
+4. 构建产物存在
+5. 服务器日志查找错误
 
-**Debug:**
+**调试：**
 ```bash
-# Check DNS
+# 检查 DNS
 nslookup fitspark.example.com
 
-# Test HTTPS
+# 测试 HTTPS
 curl -I https://fitspark.example.com
 
-# Check SSL certificate
+# 检查 SSL 证书
 openssl s_client -connect fitspark.example.com:443
 ```
 
-### Performance Issues
+### 性能问题
 
-**Diagnosis:**
+**诊断：**
 ```bash
-# Run Lighthouse
+# 运行 Lighthouse
 npm run lighthouse
 
-# Check bundle size
+# 检查包大小
 npm run analyze
 
-# Profile in Chrome DevTools
+# 在 Chrome DevTools 中分析
 Performance tab → Record → Analyze
 ```
 
-**Solutions:**
-- Enable caching
-- Optimize images
-- Lazy load resources
-- Use CDN
-- Enable compression
+**解决方案：**
+- 启用缓存
+- 优化图片
+- 懒加载资源
+- 使用 CDN
+- 启用压缩
 
-### Assets Not Loading
+### 资源无法加载
 
-**Common causes:**
-1. Wrong base path in URLs
-2. CORS issues
-3. Cache not cleared
-4. Missing files in build
+**常见原因：**
+1. URL 中基础路径错误
+2. CORS 问题
+3. 缓存未清除
+4. 构建中缺少文件
 
-**Fix:**
+**修复：**
 ```javascript
-// Ensure correct base URL
+// 确保正确的基础 URL
 const BASE_URL = window.location.origin;
 const assetUrl = `${BASE_URL}/assets/images/logo.png`;
 ```
 
-## Best Practices
+## 最佳实践
 
-### Version Control
+### 版本控制
 
 ```bash
-# Use semantic versioning
+# 使用语义化版本
 # MAJOR.MINOR.PATCH
 # 1.0.0 → 1.1.0 → 1.1.1
 
-# Tag releases
+# 标记发布
 git tag -a v1.0.0 -m "Release v1.0.0"
 git push origin v1.0.0
 ```
 
-### Branch Strategy
+### 分支策略
 
 ```
-main (production)
+main (生产)
   ↑
-develop (staging)
+develop (预发布)
   ↑
-feature/* (feature branches)
+feature/* (功能分支)
 ```
 
-**Workflow:**
-1. Create feature branch from `develop`
-2. Develop and test
-3. PR to `develop`
-4. QA on staging
+**工作流：**
+1. 从 `develop` 创建功能分支
+2. 开发和测试
+3. PR 到 `develop`
+4. 在预发布环境 QA
 5. PR `develop` → `main`
-6. Auto-deploy to production
+6. 自动部署到生产环境
 
-### Security
+### 安全
 
 ```bash
-# Regular security audits
+# 定期安全审计
 npm audit
 
-# Fix vulnerabilities
+# 修复漏洞
 npm audit fix
 
-# Update dependencies
+# 更新依赖
 npm update
 
-# Check for outdated packages
+# 检查过时的包
 npm outdated
 ```
 
-### Documentation
+### 文档
 
-Keep these docs updated:
-- README.md - Project overview
-- CHANGELOG.md - Version history
-- DEPLOYMENT.md - This file
-- API.md - API documentation
+保持这些文档更新：
+- README.md - 项目概述
+- CHANGELOG.md - 版本历史
+- DEPLOYMENT.md - 本文件
+- API.md - API 文档
 
-## Resources
+## 资源
 
-- [GitHub Actions Docs](https://docs.github.com/en/actions)
-- [GitHub Pages Docs](https://docs.github.com/en/pages)
-- [Netlify Docs](https://docs.netlify.com/)
-- [Vercel Docs](https://vercel.com/docs)
-- [Nginx Docs](https://nginx.org/en/docs/)
+- [GitHub Actions 文档](https://docs.github.com/cn/actions)
+- [GitHub Pages 文档](https://docs.github.com/cn/pages)
+- [Netlify 文档](https://docs.netlify.com/)
+- [Vercel 文档](https://vercel.com/docs)
+- [Nginx 文档](https://nginx.org/cn/docs/)
 
-## Support
+## 支持
 
-For deployment issues:
-1. Check this documentation
-2. Review GitHub Actions logs
-3. Check hosting provider status
-4. Open issue on GitHub
+如有部署问题：
+1. 查看本文档
+2. 查看 GitHub Actions 日志
+3. 检查托管服务商状态
+4. 在 GitHub 上提交 issue
 
 ---
 
-**Happy Deploying! 🚀**
-
-Current Status: Ready for Production Deployment
-Last Updated: 2025-01-19
+当前状态：生产部署就绪
+最后更新：2025-01-19

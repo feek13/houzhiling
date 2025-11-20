@@ -1,63 +1,63 @@
-# FitSpark Testing Documentation
+# FitSpark 测试文档
 
-Complete guide to testing the FitSpark application, including unit tests, integration tests, and testing best practices.
+FitSpark 应用的完整测试指南，包括单元测试、集成测试和最佳实践。
 
-## Table of Contents
+## 目录
 
-- [Overview](#overview)
-- [Test Setup](#test-setup)
-- [Running Tests](#running-tests)
-- [Test Structure](#test-structure)
-- [Unit Tests](#unit-tests)
-- [Integration Tests](#integration-tests)
-- [Writing New Tests](#writing-new-tests)
-- [Code Coverage](#code-coverage)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
+- [概述](#概述)
+- [测试环境配置](#测试环境配置)
+- [运行测试](#运行测试)
+- [测试结构](#测试结构)
+- [单元测试](#单元测试)
+- [集成测试](#集成测试)
+- [编写新测试](#编写新测试)
+- [代码覆盖率](#代码覆盖率)
+- [最佳实践](#最佳实践)
+- [故障排查](#故障排查)
 
-## Overview
+## 概述
 
-FitSpark uses **Vitest** as the testing framework. Vitest provides:
+FitSpark 使用 **Vitest** 作为测试框架。Vitest 提供：
 
-- Fast execution with native ES module support
-- Jest-compatible API
-- Built-in code coverage with V8
-- Watch mode for development
-- TypeScript support out of the box
+- 快速执行，原生 ES 模块支持
+- 兼容 Jest API
+- 内置 V8 代码覆盖率
+- 开发模式监听
+- 开箱即用的 TypeScript 支持
 
-### Test Types
+### 测试类型
 
-1. **Unit Tests** (`tests/unit/`)
-   - Test individual functions and modules in isolation
-   - Mock external dependencies
-   - Fast execution
+1. **单元测试** (`tests/unit/`)
+   - 隔离测试单个函数和模块
+   - 模拟外部依赖
+   - 快速执行
 
-2. **Integration Tests** (`tests/integration/`)
-   - Test how multiple modules work together
-   - Test complete user workflows
-   - Verify data flow between services
+2. **集成测试** (`tests/integration/`)
+   - 测试多个模块协同工作
+   - 测试完整用户流程
+   - 验证服务间数据流
 
-## Test Setup
+## 测试环境配置
 
-### Installation
+### 安装
 
 ```bash
-# Install dependencies
+# 安装依赖
 npm install
 
-# Install testing dependencies explicitly
+# 显式安装测试依赖
 npm install --save-dev vitest @vitest/ui @vitest/coverage-v8 jsdom
 ```
 
-### Configuration
+### 配置
 
-Test configuration is in `vitest.config.js`:
+测试配置位于 `vitest.config.js`:
 
 ```javascript
 {
   test: {
-    globals: true,              // Enable global test APIs
-    environment: 'jsdom',       // Browser-like environment
+    globals: true,              // 启用全局测试 API
+    environment: 'jsdom',       // 类浏览器环境
     setupFiles: ['./tests/setup.js'],
     coverage: {
       provider: 'v8',
@@ -67,97 +67,97 @@ Test configuration is in `vitest.config.js`:
 }
 ```
 
-### Setup File
+### 配置文件
 
-`tests/setup.js` configures the test environment:
+`tests/setup.js` 配置测试环境：
 
-- Mocks localStorage and sessionStorage
-- Mocks window.location
-- Mocks navigator.clipboard
-- Mocks Web Share API
-- Clears mocks between tests
+- 模拟 localStorage 和 sessionStorage
+- 模拟 window.location
+- 模拟 navigator.clipboard
+- 模拟 Web Share API
+- 测试间清理 mock
 
-## Running Tests
+## 运行测试
 
-### Basic Commands
+### 基本命令
 
 ```bash
-# Run all tests
+# 运行所有测试
 npm test
 
-# Run tests in watch mode (auto-reruns on file changes)
+# 监听模式（文件修改时自动重新运行）
 npm run test:watch
 
-# Run only unit tests
+# 仅运行单元测试
 npm run test:unit
 
-# Run only integration tests
+# 仅运行集成测试
 npm run test:integration
 
-# Run tests with UI
+# UI 模式运行测试
 npm run test:ui
 
-# Generate coverage report
+# 生成覆盖率报告
 npm run test:coverage
 ```
 
-### Watch Mode
+### 监听模式
 
-Watch mode is ideal for development:
+监听模式适合开发：
 
 ```bash
 npm run test:watch
 ```
 
-Commands in watch mode:
-- Press `a` to run all tests
-- Press `f` to run only failed tests
-- Press `t` to filter by test name
-- Press `q` to quit
+监听模式命令：
+- 按 `a` 运行所有测试
+- 按 `f` 仅运行失败的测试
+- 按 `t` 按名称过滤测试
+- 按 `q` 退出
 
-### Coverage Reports
+### 覆盖率报告
 
-Generate coverage reports:
+生成覆盖率报告：
 
 ```bash
 npm run test:coverage
 ```
 
-Coverage reports are generated in `coverage/` directory:
-- `coverage/index.html` - Visual HTML report
-- `coverage/coverage-final.json` - JSON data
-- Console output shows coverage summary
+覆盖率报告生成在 `coverage/` 目录：
+- `coverage/index.html` - 可视化 HTML 报告
+- `coverage/coverage-final.json` - JSON 数据
+- 控制台输出显示覆盖率摘要
 
-## Test Structure
+## 测试结构
 
 ```
 tests/
-├── setup.js                      # Global test setup
-├── unit/                         # Unit tests
-│   ├── storage.test.js          # Storage service tests
-│   ├── eventBus.test.js         # Event bus tests
-│   └── authService.test.js      # Auth service tests
-└── integration/                  # Integration tests
-    ├── auth-flow.test.js        # Authentication workflow
-    └── workout-flow.test.js     # Workout tracking workflow
+├── setup.js                      # 全局测试配置
+├── unit/                         # 单元测试
+│   ├── storage.test.js          # 存储服务测试
+│   ├── eventBus.test.js         # 事件总线测试
+│   └── authService.test.js      # 认证服务测试
+└── integration/                  # 集成测试
+    ├── auth-flow.test.js        # 认证流程
+    └── workout-flow.test.js     # 运动追踪流程
 ```
 
-## Unit Tests
+## 单元测试
 
-### Storage Service Tests (`tests/unit/storage.test.js`)
+### 存储服务测试 (`tests/unit/storage.test.js`)
 
-Tests the localStorage abstraction layer.
+测试 localStorage 抽象层。
 
-**Test Coverage:**
-- ✅ Save and retrieve values (string, object, array)
-- ✅ Default values for missing keys
-- ✅ Remove and clear operations
-- ✅ Check key existence
-- ✅ Error handling (invalid JSON, circular references)
-- ✅ Complex data types (Date, Boolean, Number, null, undefined)
-- ✅ Large data sets
+**测试覆盖：**
+- 保存和检索值（字符串、对象、数组）
+- 缺失键的默认值
+- 删除和清空操作
+- 检查键存在性
+- 错误处理（无效 JSON、循环引用）
+- 复杂数据类型（Date、Boolean、Number、null、undefined）
+- 大数据集
 
-**Example:**
+**示例：**
 ```javascript
 describe('Storage Service', () => {
   it('should save and retrieve an object', () => {
@@ -169,22 +169,22 @@ describe('Storage Service', () => {
 });
 ```
 
-### Event Bus Tests (`tests/unit/eventBus.test.js`)
+### 事件总线测试 (`tests/unit/eventBus.test.js`)
 
-Tests the publish-subscribe event system.
+测试发布-订阅事件系统。
 
-**Test Coverage:**
-- ✅ Event registration with `on()`
-- ✅ One-time listeners with `once()`
-- ✅ Event unregistration with `off()`
-- ✅ Event emission with `emit()`
-- ✅ Async event handling with `emitAsync()`
-- ✅ Priority ordering
-- ✅ Wildcard listeners (`*`)
-- ✅ Error handling in listeners
-- ✅ Memory management
+**测试覆盖：**
+- 使用 `on()` 注册事件
+- 使用 `once()` 一次性监听器
+- 使用 `off()` 注销事件
+- 使用 `emit()` 发布事件
+- 使用 `emitAsync()` 异步事件处理
+- 优先级排序
+- 通配符监听器 (`*`)
+- 监听器错误处理
+- 内存管理
 
-**Example:**
+**示例：**
 ```javascript
 describe('Event Bus Service', () => {
   it('should trigger multiple listeners', () => {
@@ -201,24 +201,24 @@ describe('Event Bus Service', () => {
 });
 ```
 
-### Auth Service Tests (`tests/unit/authService.test.js`)
+### 认证服务测试 (`tests/unit/authService.test.js`)
 
-Tests user authentication and authorization.
+测试用户认证和授权。
 
-**Test Coverage:**
-- ✅ User registration with validation
-- ✅ Login with credentials
-- ✅ Logout functionality
-- ✅ Current user retrieval
-- ✅ Profile updates
-- ✅ Password changes
-- ✅ Authentication state
-- ✅ Email format validation
-- ✅ Password strength validation
-- ✅ Event emissions
-- ✅ Security (password hashing, no password exposure)
+**测试覆盖：**
+- 带验证的用户注册
+- 凭据登录
+- 登出功能
+- 当前用户获取
+- 个人资料更新
+- 密码修改
+- 认证状态
+- 邮箱格式验证
+- 密码强度验证
+- 事件发布
+- 安全性（密码哈希、无密码暴露）
 
-**Example:**
+**示例：**
 ```javascript
 describe('Auth Service', () => {
   it('should successfully register a new user', () => {
@@ -230,45 +230,45 @@ describe('Auth Service', () => {
 
     expect(result.success).toBe(true);
     expect(result.user.email).toBe('test@example.com');
-    expect(result.user.password).toBeUndefined(); // Security check
+    expect(result.user.password).toBeUndefined(); // 安全检查
   });
 });
 ```
 
-## Integration Tests
+## 集成测试
 
-### Authentication Flow (`tests/integration/auth-flow.test.js`)
+### 认证流程 (`tests/integration/auth-flow.test.js`)
 
-Tests complete authentication workflows.
+测试完整认证工作流。
 
-**Test Coverage:**
-- ✅ Complete registration flow (register → login → storage → events)
-- ✅ Duplicate registration prevention
-- ✅ Login/logout workflow
-- ✅ Failed login handling
-- ✅ Profile management
-- ✅ Password change and re-authentication
-- ✅ Multi-user scenarios
-- ✅ Event propagation order
-- ✅ State persistence across page reloads
-- ✅ Corrupted data handling
-- ✅ Security (no password exposure)
+**测试覆盖：**
+- 完整注册流程（注册 → 登录 → 存储 → 事件）
+- 重复注册防护
+- 登录/登出流程
+- 登录失败处理
+- 个人资料管理
+- 密码修改和重新认证
+- 多用户场景
+- 事件传播顺序
+- 页面重载后状态持久化
+- 损坏数据处理
+- 安全性（无密码暴露）
 
-**Example:**
+**示例：**
 ```javascript
 describe('Authentication Flow Integration', () => {
   it('should handle full user registration workflow', () => {
     const registerCallback = vi.fn();
     eventBus.on(EventNames.AUTH_REGISTER, registerCallback);
 
-    // Register
+    // 注册
     authService.register({
       email: 'test@example.com',
       password: 'Pass123',
       nickname: 'Test'
     });
 
-    // Verify all steps
+    // 验证所有步骤
     expect(registerCallback).toHaveBeenCalled();
     expect(storage.get('users').length).toBe(1);
     expect(authService.isAuthenticated()).toBe(true);
@@ -276,51 +276,28 @@ describe('Authentication Flow Integration', () => {
 });
 ```
 
-### Workout Flow (`tests/integration/workout-flow.test.js`)
+### 运动流程 (`tests/integration/workout-flow.test.js`)
 
-Tests workout and activity tracking.
+测试运动和活动追踪。
 
-**Test Coverage:**
-- ✅ Workout logging and events
-- ✅ Multiple workout tracking
-- ✅ Workout statistics calculation
-- ✅ Nutrition logging
-- ✅ Daily nutrition intake tracking
-- ✅ Check-in and streak tracking
-- ✅ Badge awarding
-- ✅ Body metrics tracking
-- ✅ BMI calculation
-- ✅ Activity feed aggregation
-- ✅ Event-driven updates
-- ✅ Multi-user isolation
-- ✅ Data consistency
+**测试覆盖：**
+- 运动记录和事件
+- 多个运动追踪
+- 运动统计计算
+- 营养记录
+- 每日营养摄入追踪
+- 打卡和连续天数追踪
+- 徽章授予
+- 身体指标追踪
+- BMI 计算
+- 活动信息流聚合
+- 事件驱动更新
+- 多用户隔离
+- 数据一致性
 
-**Example:**
-```javascript
-describe('Workout Flow Integration', () => {
-  it('should log workout and trigger events', () => {
-    const callback = vi.fn();
-    eventBus.on(EventNames.WORKOUT_COMPLETED, callback);
+## 编写新测试
 
-    const workout = {
-      muscle: '胸部',
-      duration: 45,
-      calories: 350
-    };
-
-    // Save and emit
-    storage.save('workouts', [workout]);
-    eventBus.emit(EventNames.WORKOUT_COMPLETED, { workout });
-
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(storage.get('workouts').length).toBe(1);
-  });
-});
-```
-
-## Writing New Tests
-
-### Test File Structure
+### 测试文件结构
 
 ```javascript
 import { describe, it, expect, beforeEach, vi } from 'vitest';
@@ -328,55 +305,55 @@ import { yourModule } from '../path/to/module.js';
 
 describe('Module Name', () => {
   beforeEach(() => {
-    // Setup before each test
+    // 每个测试前的配置
     localStorage.clear();
     vi.clearAllMocks();
   });
 
   describe('Function Name', () => {
     it('should do something specific', () => {
-      // Arrange
+      // Arrange（准备）
       const input = { data: 'test' };
 
-      // Act
+      // Act（执行）
       const result = yourModule.doSomething(input);
 
-      // Assert
+      // Assert（断言）
       expect(result).toBe(expected);
     });
   });
 });
 ```
 
-### Best Practices for Writing Tests
+### 编写测试最佳实践
 
-1. **Follow AAA Pattern**
-   - **Arrange**: Set up test data and conditions
-   - **Act**: Execute the function/action
-   - **Assert**: Verify the result
+1. **遵循 AAA 模式**
+   - **Arrange（准备）**: 设置测试数据和条件
+   - **Act（执行）**: 执行函数/操作
+   - **Assert（断言）**: 验证结果
 
-2. **Use Descriptive Test Names**
+2. **使用描述性测试名称**
    ```javascript
-   // Good
+   // 好的
    it('should return null when user is not logged in', () => {});
 
-   // Bad
+   // 不好的
    it('test 1', () => {});
    ```
 
-3. **Test One Thing Per Test**
+3. **每个测试只测试一件事**
    ```javascript
-   // Good
+   // 好的
    it('should validate email format', () => {});
    it('should validate password length', () => {});
 
-   // Bad
+   // 不好的
    it('should validate input', () => {
-     // Tests email, password, name all together
+     // 同时测试邮箱、密码、姓名
    });
    ```
 
-4. **Use beforeEach for Common Setup**
+4. **使用 beforeEach 进行通用配置**
    ```javascript
    describe('Auth Tests', () => {
      beforeEach(() => {
@@ -389,96 +366,96 @@ describe('Module Name', () => {
    });
    ```
 
-5. **Mock External Dependencies**
+5. **模拟外部依赖**
    ```javascript
    const mockFetch = vi.fn(() => Promise.resolve({ data: 'test' }));
    global.fetch = mockFetch;
    ```
 
-6. **Test Edge Cases**
-   - Empty inputs
-   - Null/undefined values
-   - Invalid data types
-   - Boundary conditions
+6. **测试边界情况**
+   - 空输入
+   - Null/undefined 值
+   - 无效数据类型
+   - 边界条件
 
-7. **Test Error Handling**
+7. **测试错误处理**
    ```javascript
    it('should handle errors gracefully', () => {
      expect(() => riskyFunction()).not.toThrow();
    });
    ```
 
-### Mocking Guide
+### 模拟指南
 
-**Mock Functions:**
+**模拟函数：**
 ```javascript
 const mockCallback = vi.fn();
 mockCallback('test');
 expect(mockCallback).toHaveBeenCalledWith('test');
 ```
 
-**Mock Return Values:**
+**模拟返回值：**
 ```javascript
 const mock = vi.fn(() => 42);
 expect(mock()).toBe(42);
 ```
 
-**Mock Async Functions:**
+**模拟异步函数：**
 ```javascript
 const mockAsync = vi.fn(() => Promise.resolve('data'));
 const result = await mockAsync();
 expect(result).toBe('data');
 ```
 
-**Spy on Objects:**
+**监听对象：**
 ```javascript
 const spy = vi.spyOn(object, 'method');
 object.method();
 expect(spy).toHaveBeenCalled();
 ```
 
-## Code Coverage
+## 代码覆盖率
 
-### Coverage Metrics
+### 覆盖率指标
 
-- **Line Coverage**: Percentage of lines executed
-- **Branch Coverage**: Percentage of conditional branches tested
-- **Function Coverage**: Percentage of functions called
-- **Statement Coverage**: Percentage of statements executed
+- **行覆盖率**: 执行的代码行百分比
+- **分支覆盖率**: 测试的条件分支百分比
+- **函数覆盖率**: 调用的函数百分比
+- **语句覆盖率**: 执行的语句百分比
 
-### Target Coverage
+### 目标覆盖率
 
-FitSpark aims for:
-- **Unit Tests**: 80%+ coverage
-- **Integration Tests**: 60%+ coverage
-- **Overall**: 70%+ coverage
+FitSpark 目标：
+- **单元测试**: 80%+ 覆盖率
+- **集成测试**: 60%+ 覆盖率
+- **总体**: 70%+ 覆盖率
 
-### Viewing Coverage
+### 查看覆盖率
 
 ```bash
-# Generate and view coverage
+# 生成并查看覆盖率
 npm run test:coverage
 open coverage/index.html
 ```
 
-### Coverage Reports
+### 覆盖率报告
 
-Coverage reports highlight:
-- 🟢 Green: Well-covered code
-- 🟡 Yellow: Partially covered code
-- 🔴 Red: Uncovered code
+覆盖率报告高亮显示：
+- 绿色：覆盖良好的代码
+- 黄色：部分覆盖的代码
+- 红色：未覆盖的代码
 
-Focus on covering critical paths first:
-1. Authentication flows
-2. Data storage and retrieval
-3. Event handling
-4. User workflows
+优先覆盖关键路径：
+1. 认证流程
+2. 数据存储和检索
+3. 事件处理
+4. 用户工作流
 
-## Best Practices
+## 最佳实践
 
-### Test Organization
+### 测试组织
 
-1. **Group Related Tests**
+1. **分组相关测试**
    ```javascript
    describe('User Management', () => {
      describe('Registration', () => {
@@ -493,138 +470,138 @@ Focus on covering critical paths first:
    });
    ```
 
-2. **Use Descriptive Names**
-   - Test names should read like documentation
-   - Use "should" statements
-   - Be specific about what is being tested
+2. **使用描述性名称**
+   - 测试名称应像文档一样易读
+   - 使用 "should" 语句
+   - 明确说明正在测试的内容
 
-3. **Keep Tests Independent**
-   - Each test should run in isolation
-   - Don't depend on test execution order
-   - Clean up after each test
+3. **保持测试独立**
+   - 每个测试应独立运行
+   - 不依赖测试执行顺序
+   - 每次测试后清理
 
-4. **Test Behavior, Not Implementation**
+4. **测试行为，而非实现**
    ```javascript
-   // Good: Test the behavior
+   // 好的：测试行为
    it('should return user email after login', () => {
      authService.login('user@test.com', 'pass');
      expect(authService.currentUser().email).toBe('user@test.com');
    });
 
-   // Bad: Test implementation details
+   // 不好的：测试实现细节
    it('should call getUserFromStorage internally', () => {
-     // Don't test internal functions
+     // 不要测试内部函数
    });
    ```
 
-### Performance
+### 性能
 
-1. **Fast Tests**
-   - Unit tests should run in milliseconds
-   - Integration tests in seconds
-   - Use mocks to avoid slow operations
+1. **快速测试**
+   - 单元测试应在毫秒内运行
+   - 集成测试在秒级
+   - 使用 mock 避免慢速操作
 
-2. **Parallel Execution**
-   - Vitest runs tests in parallel by default
-   - Keep tests independent for parallelization
+2. **并行执行**
+   - Vitest 默认并行运行测试
+   - 保持测试独立以支持并行化
 
-3. **Watch Mode**
-   - Use watch mode during development
-   - Vitest only reruns affected tests
+3. **监听模式**
+   - 开发时使用监听模式
+   - Vitest 只重新运行受影响的测试
 
-### Debugging Tests
+### 调试测试
 
-**Console Output:**
+**控制台输出：**
 ```javascript
 it('debug test', () => {
   const data = { value: 42 };
-  console.log('Debug:', data); // Shows in test output
+  console.log('Debug:', data); // 在测试输出中显示
   expect(data.value).toBe(42);
 });
 ```
 
-**Test Only:**
+**仅运行指定测试：**
 ```javascript
 it.only('run only this test', () => {
-  // This test will run exclusively
+  // 此测试将独占运行
 });
 ```
 
-**Skip Tests:**
+**跳过测试：**
 ```javascript
 it.skip('skip this test', () => {
-  // This test will be skipped
+  // 此测试将被跳过
 });
 ```
 
-**Test UI:**
+**测试 UI：**
 ```bash
 npm run test:ui
-# Opens browser interface for debugging
+# 打开浏览器界面进行调试
 ```
 
-## Troubleshooting
+## 故障排查
 
-### Common Issues
+### 常见问题
 
-**Issue: Tests fail with "Cannot find module"**
+**问题：测试失败 "Cannot find module"**
 ```bash
-# Solution: Check import paths are correct
-# Use relative paths for project files
+# 解决方案：检查导入路径正确
+# 使用相对路径导入项目文件
 import { storage } from '../../src/assets/js/services/storage.js';
 ```
 
-**Issue: "localStorage is not defined"**
+**问题："localStorage is not defined"**
 ```bash
-# Solution: Ensure tests/setup.js is configured in vitest.config.js
+# 解决方案：确保 tests/setup.js 在 vitest.config.js 中配置
 setupFiles: ['./tests/setup.js']
 ```
 
-**Issue: Tests pass locally but fail in CI**
+**问题：本地测试通过但 CI 失败**
 ```bash
-# Solution: Clear cache and reinstall
+# 解决方案：清除缓存并重新安装
 rm -rf node_modules package-lock.json
 npm install
 npm test
 ```
 
-**Issue: Async tests timeout**
+**问题：异步测试超时**
 ```javascript
-// Solution: Increase timeout or await promises
+// 解决方案：增加超时或等待 promise
 it('async test', async () => {
   await asyncFunction();
-}, 10000); // 10 second timeout
+}, 10000); // 10 秒超时
 ```
 
-**Issue: Flaky tests (pass sometimes, fail sometimes)**
+**问题：不稳定测试（有时通过，有时失败）**
 ```bash
-# Common causes:
-# 1. Tests depend on execution order
-# 2. Not cleaning up properly
-# 3. Race conditions in async code
+# 常见原因：
+# 1. 测试依赖执行顺序
+# 2. 清理不当
+# 3. 异步代码竞态条件
 
-# Solution: Make tests independent
+# 解决方案：使测试独立
 beforeEach(() => {
   localStorage.clear();
   vi.clearAllMocks();
 });
 ```
 
-### Getting Help
+### 获取帮助
 
-- Check [Vitest Documentation](https://vitest.dev)
-- Review existing tests for examples
-- Run tests with `--reporter=verbose` for detailed output
-- Use `console.log()` for debugging
+- 查看 [Vitest 文档](https://vitest.dev)
+- 查看现有测试作为示例
+- 使用 `--reporter=verbose` 运行测试获取详细输出
+- 使用 `console.log()` 调试
 
-## Continuous Integration
+## 持续集成
 
-### Running Tests in CI
+### 在 CI 中运行测试
 
-Add to your CI pipeline:
+添加到 CI 流水线：
 
 ```yaml
-# Example GitHub Actions
+# GitHub Actions 示例
 - name: Run Tests
   run: npm test
 
@@ -635,9 +612,9 @@ Add to your CI pipeline:
   uses: codecov/codecov-action@v3
 ```
 
-### Pre-commit Hooks
+### 预提交钩子
 
-Run tests before commits:
+提交前运行测试：
 
 ```json
 {
@@ -649,37 +626,37 @@ Run tests before commits:
 }
 ```
 
-## Maintenance
+## 维护
 
-### When to Update Tests
+### 何时更新测试
 
-- When adding new features
-- When fixing bugs
-- When refactoring code
-- When changing APIs
-- When user workflows change
+- 添加新功能时
+- 修复 bug 时
+- 重构代码时
+- 更改 API 时
+- 用户工作流变化时
 
-### Test Review Checklist
+### 测试审查清单
 
-- [ ] All tests pass
-- [ ] Coverage meets targets
-- [ ] Tests are independent
-- [ ] Edge cases covered
-- [ ] Error handling tested
-- [ ] Mock cleanup proper
-- [ ] Test names descriptive
-- [ ] No flaky tests
+- [ ] 所有测试通过
+- [ ] 达到覆盖率目标
+- [ ] 测试独立
+- [ ] 覆盖边界情况
+- [ ] 测试错误处理
+- [ ] Mock 清理正确
+- [ ] 测试名称描述性强
+- [ ] 无不稳定测试
 
-## Summary
+## 总结
 
-FitSpark's testing strategy ensures:
+FitSpark 的测试策略确保：
 
-✅ **Reliability**: Catch bugs before production
-✅ **Confidence**: Refactor safely with test coverage
-✅ **Documentation**: Tests serve as executable documentation
-✅ **Quality**: Maintain high code quality standards
+- **可靠性**: 在生产前捕获 bug
+- **信心**: 在测试覆盖下安全重构
+- **文档**: 测试作为可执行文档
+- **质量**: 保持高代码质量标准
 
-For questions or issues, refer to:
-- This documentation
-- Existing test files as examples
-- Vitest official documentation
+如有问题，请参考：
+- 本文档
+- 现有测试文件作为示例
+- Vitest 官方文档

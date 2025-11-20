@@ -1,199 +1,159 @@
-# 🏋️ FitSpark - Your Personal Fitness Companion
+# FitSpark - 健身追踪与社交平台
 
-[![CI](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com)
 [![Tests](https://img.shields.io/badge/tests-200%2B%20passing-success)](https://github.com)
 [![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)](https://github.com)
-[![Performance](https://img.shields.io/badge/lighthouse-90%2B-brightgreen)](https://github.com)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-A comprehensive fitness tracking and social platform built with vanilla JavaScript, featuring workout logging, nutrition tracking, social features, and AI-powered recommendations.
+基于原生 JavaScript 开发的综合性健身追踪与社交平台毕业设计项目。
 
-## ✨ Features
+## 项目简介
 
-### 🎯 Core Features
-- **Workout Tracking** - Log exercises, sets, reps, and track calories burned
-- **Nutrition Logging** - Track meals, calories, and macronutrients
-- **Body Metrics** - Monitor weight, body fat percentage, and BMI
-- **Todo Management** - Organize fitness goals and daily tasks
-- **Daily Check-in** - Build streaks and earn achievement badges
+本项目是一个完整的前端单页应用（SPA），采用原生 JavaScript（ES6+）开发，无第三方框架依赖。实现了健身记录、营养追踪、社交互动、数据分析等功能，所有数据通过 localStorage 本地存储。
 
-### 📊 Analytics & Insights
-- **Multi-dimensional Charts** - 5 chart types for data visualization
-- **Time Comparisons** - Compare week/month/year progress
-- **Health Reports** - Comprehensive fitness assessments
-- **Performance Metrics** - Track improvements over time
+## 主要功能
 
-### 🤖 AI & Recommendations
-- **Smart Recommendations** - Rule-based + collaborative filtering
-- **Nutrition Advice** - BMR/TDEE calculations and meal plans
-- **Training Plans** - Auto-generated 3/4/5-day workout programs
-- **Content Suggestions** - Personalized workout and nutrition content
+### 核心功能
+- 运动记录 - 记录运动类型、组数、次数和消耗卡路里
+- 营养日志 - 追踪饮食摄入和营养成分
+- 身体指标 - 监控体重、体脂率和 BMI
+- 每日打卡 - 建立连续打卡记录和成就徽章
 
-### 👥 Social Features
-- **Friends System** - Add, remove, search, and get recommendations
-- **Leaderboards** - Multi-dimensional rankings (weekly/monthly/all-time)
-- **Activity Feed** - Real-time updates from friends
-- **Share Cards** - Beautiful achievement sharing cards
-- **Forum** - Community discussions with posts, replies, likes
+### 数据分析
+- 多维度图表 - 5 种图表类型数据可视化
+- 时间对比 - 周/月/年进度对比
+- 健康报告 - 综合健身评估
+- 性能指标 - 追踪训练进步
 
-### 🔧 Advanced Features
-- **OAuth Login** - GitHub, Google, Facebook integration
-- **Calendar Sync** - Export workouts to ICS format
-- **Social Sharing** - Share to Twitter, Facebook, WeChat, Weibo, QQ
-- **Data Export** - Export data in CSV/JSON formats
-- **Event Bus** - Decoupled module communication
-- **Performance Monitoring** - Real-time performance tracking
+### 智能推荐
+- 协同过滤推荐算法
+- 基于 BMR/TDEE 的营养建议
+- 自动生成训练计划
+- 个性化内容推荐
 
-## 🚀 Quick Start
+### 社交功能
+- 好友系统 - 添加、搜索、推荐好友
+- 排行榜 - 多维度排名（周/月/总榜）
+- 动态信息流 - 好友动态实时更新
+- 社区论坛 - 帖子、回复、点赞
 
-### Prerequisites
+### 其他功能
+- OAuth 登录 - 支持 GitHub、Google、Facebook
+- 日历同步 - 导出 ICS 格式
+- 数据导出 - CSV/JSON 格式
+- 性能监控 - 实时性能追踪
 
-- Node.js 18+ and npm
-- Modern browser (Chrome, Firefox, Safari, Edge)
+## 快速开始
 
-### Installation
+### 环境要求
+
+- Node.js 18+
+- 现代浏览器（Chrome、Firefox、Safari、Edge）
+
+### 安装运行
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/fitspark.git
-cd fitspark
-
-# Install dependencies
+# 安装依赖
 npm install
 
-# Start development server
+# 启动开发服务器
 npm run dev
 
-# Open in browser
-open http://localhost:3000
+# 访问 http://localhost:3000
 ```
 
-### Running Tests
+### 运行测试
 
 ```bash
-# Run all tests
+# 运行所有测试
 npm test
 
-# Run specific test suites
-npm run test:unit          # Unit tests only
-npm run test:integration   # Integration tests only
+# 单元测试
+npm run test:unit
 
-# Watch mode for development
-npm run test:watch
+# 集成测试
+npm run test:integration
 
-# Generate coverage report
+# 测试覆盖率
 npm run test:coverage
-open coverage/index.html
 ```
 
-## 📁 Project Structure
+## 项目结构
 
 ```
-fitspark/
-├── .github/
-│   └── workflows/          # CI/CD pipelines
-├── docs/                   # Documentation
-│   ├── TESTING.md         # Testing guide
-│   ├── PERFORMANCE.md     # Performance optimization
-│   ├── DEPLOYMENT.md      # Deployment guide
-│   └── EVENT_BUS_GUIDE.md # Event bus documentation
-├── src/                    # Source code
-│   ├── assets/
-│   │   ├── css/           # Stylesheets
-│   │   └── js/
-│   │       ├── modules/   # Feature modules
-│   │       ├── services/  # Core services
-│   │       └── utils/     # Utility functions
-│   └── index.html         # Main HTML file
-├── tests/                  # Test suites
-│   ├── unit/              # Unit tests
-│   ├── integration/       # Integration tests
-│   └── setup.js           # Test configuration
-├── package.json           # Dependencies and scripts
-├── vitest.config.js       # Test configuration
-└── .lighthouserc.js       # Performance benchmarks
+src/
+├── assets/
+│   └── js/
+│       ├── modules/   # 功能模块
+│       ├── services/  # 核心服务
+│       ├── views/     # 视图组件
+│       └── utils/     # 工具函数
+tests/
+├── unit/              # 单元测试
+└── integration/       # 集成测试
 ```
 
-## 🧪 Testing
+## 技术特点
 
-### Test Coverage
+### 架构设计
+- SPA 路由 - 基于 History API 的路由系统
+- 视图分离 - 视图与业务逻辑解耦
+- IIFE 模块 - 模块封装和私有作用域
+- 事件驱动 - EventBus 实现模块间通信
+- 服务层分离 - UI 逻辑与业务逻辑分离
 
-| Category | Tests | Coverage |
-|----------|-------|----------|
-| Unit Tests | 135 | 97% |
-| Integration Tests | 65 | 89% |
-| **Total** | **200+** | **93%** |
+### 性能优化
+- 懒加载 - 按需加载模块和图片
+- 代码分割 - 基于路由的代码分割
+- 防抖节流 - 事件优化处理
+- 性能监控 - Core Web Vitals 追踪
 
-See [TESTING.md](docs/TESTING.md) for detailed testing guide.
+### 测试覆盖
 
-## ⚡ Performance
+| 类别 | 测试数 | 覆盖率 |
+|------|--------|--------|
+| 单元测试 | 135 | 97% |
+| 集成测试 | 65 | 89% |
+| 总计 | 200+ | 93% |
 
-### Metrics
+### 性能指标
 
-- **First Contentful Paint**: ~1.2s (target: < 1.8s)
-- **Time to Interactive**: ~2.5s (target: < 3.8s)
-- **Performance Score**: 90+ (Lighthouse)
+- 首次内容绘制（FCP）: ~1.2s
+- 可交互时间（TTI）: ~2.5s
+- Lighthouse 评分: 90+
 
-### Optimizations
+## 开发说明
 
-- Lazy Loading for images and modules
-- Code Splitting for feature-based separation
-- Debouncing for event optimization
-- Real-time performance monitoring
+### 核心服务
+- `router.js` - 路由管理
+- `eventBus.js` - 事件系统
+- `storage.js` - 数据存储
+- `authService.js` - 用户认证
 
-See [PERFORMANCE.md](docs/PERFORMANCE.md) for optimization guide.
+### 开发规范
+- 服务层不操作 DOM
+- 模块间通过 EventBus 通信
+- 所有数据包含 userId 字段
+- 使用 `data-link` 属性处理内部导航
 
-## 🚢 Deployment
+## 项目统计
 
-Every push to `main` triggers automated deployment:
-1. ✅ Run all tests
-2. 🔍 Security audit
-3. 📊 Performance checks
-4. 🚀 Deploy to production
+- 代码量: 15,000+ 行
+- 文件数: 50+ 个 JavaScript 模块
+- 自动化测试: 200+ 个
+- 测试覆盖率: 93%
 
-See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment guide.
+## 技术栈
 
-## 📚 Documentation
+- 原生 JavaScript (ES6+)
+- LocalStorage
+- History API
+- Vitest (测试框架)
+- Vite (开发服务器)
 
-- **[Testing Guide](docs/TESTING.md)** - Complete testing documentation
-- **[Performance Guide](docs/PERFORMANCE.md)** - Optimization strategies
-- **[Deployment Guide](docs/DEPLOYMENT.md)** - CI/CD and hosting
-- **[Event Bus Guide](docs/EVENT_BUS_GUIDE.md)** - Event-driven architecture
+## 许可证
 
-## 🛠️ Development
+MIT License
 
-### Available Scripts
+## 项目信息
 
-```bash
-npm run dev              # Start development server
-npm test                 # Run all tests
-npm run test:watch       # Watch mode
-npm run test:coverage    # Generate coverage report
-```
-
-## 📊 Project Stats
-
-- **Lines of Code**: ~15,000+
-- **Files**: 50+ JavaScript modules
-- **Tests**: 200+ automated tests
-- **Test Coverage**: 93%
-- **Performance Score**: 90+
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Contact
-
-- **GitHub**: https://github.com/yourusername/fitspark
-- **Issues**: https://github.com/yourusername/fitspark/issues
-
----
-
-**Built with ❤️ by the FitSpark Team**
-
-*Making fitness tracking social, intelligent, and fun!*
-
-**Version**: 1.0.0
-**Status**: Production Ready 🚀
-**Last Updated**: 2025-01-19
+- 版本: 1.0.0
+- 更新时间: 2025-01-19

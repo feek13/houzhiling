@@ -1,54 +1,54 @@
-# FitSpark Performance Optimization Guide
+# FitSpark 性能优化指南
 
-Comprehensive guide to performance optimization strategies, best practices, and tools implemented in FitSpark.
+FitSpark 实现的性能优化策略、最佳实践和工具的综合指南。
 
-## Table of Contents
+## 目录
 
-- [Overview](#overview)
-- [Performance Tools](#performance-tools)
-- [Lazy Loading](#lazy-loading)
-- [Code Splitting](#code-splitting)
-- [Debouncing & Throttling](#debouncing--throttling)
-- [Performance Monitoring](#performance-monitoring)
-- [Best Practices](#best-practices)
-- [Optimization Checklist](#optimization-checklist)
-- [Troubleshooting](#troubleshooting)
+- [概述](#概述)
+- [性能工具](#性能工具)
+- [懒加载](#懒加载)
+- [代码分割](#代码分割)
+- [防抖与节流](#防抖与节流)
+- [性能监控](#性能监控)
+- [最佳实践](#最佳实践)
+- [优化清单](#优化清单)
+- [故障排查](#故障排查)
 
-## Overview
+## 概述
 
-FitSpark implements comprehensive performance optimization to ensure:
+FitSpark 实现了全面的性能优化以确保：
 
-✅ **Fast Initial Load**: < 2s First Contentful Paint
-✅ **Smooth Interactions**: < 100ms response time
-✅ **Efficient Memory**: < 50MB heap usage
-✅ **Optimized Assets**: Lazy loading and code splitting
-✅ **Minimal Blocking**: Debounced/throttled operations
+- **快速初始加载**: < 2s 首次内容绘制
+- **流畅交互**: < 100ms 响应时间
+- **高效内存**: < 50MB 堆使用
+- **优化资源**: 懒加载和代码分割
+- **最小阻塞**: 防抖/节流操作
 
-### Performance Metrics
+### 性能指标
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| First Contentful Paint (FCP) | < 1.8s | ~1.2s |
-| Time to Interactive (TTI) | < 3.8s | ~2.5s |
-| First Input Delay (FID) | < 100ms | ~50ms |
-| Cumulative Layout Shift (CLS) | < 0.1 | ~0.05 |
-| Total Blocking Time (TBT) | < 300ms | ~150ms |
+| 指标 | 目标 | 当前 |
+|------|------|------|
+| 首次内容绘制 (FCP) | < 1.8s | ~1.2s |
+| 可交互时间 (TTI) | < 3.8s | ~2.5s |
+| 首次输入延迟 (FID) | < 100ms | ~50ms |
+| 累积布局偏移 (CLS) | < 0.1 | ~0.05 |
+| 总阻塞时间 (TBT) | < 300ms | ~150ms |
 
-## Performance Tools
+## 性能工具
 
-### Lazy Loader (`src/assets/js/utils/lazyLoader.js`)
+### 懒加载器 (`src/assets/js/utils/lazyLoader.js`)
 
-Dynamic module loading and resource optimization utility.
+动态模块加载和资源优化工具。
 
-#### Module Loading
+#### 模块加载
 
 ```javascript
 import { lazyLoader } from './utils/lazyLoader.js';
 
-// Load module dynamically
+// 动态加载模块
 const module = await lazyLoader.loadModule('./modules/charts.js');
 
-// With options
+// 带选项
 const module = await lazyLoader.loadModule('./modules/analytics.js', {
   cache: true,
   timeout: 10000,
@@ -56,72 +56,72 @@ const module = await lazyLoader.loadModule('./modules/analytics.js', {
 });
 ```
 
-#### Image Lazy Loading
+#### 图片懒加载
 
 ```html
 <!-- HTML -->
-<img data-src="image.jpg" data-srcset="image-2x.jpg 2x" alt="Lazy loaded image">
+<img data-src="image.jpg" data-srcset="image-2x.jpg 2x" alt="懒加载图片">
 
 <!-- JavaScript -->
 <script>
 import { lazyLoader } from './utils/lazyLoader.js';
 
-// Initialize lazy loading for images
+// 初始化图片懒加载
 lazyLoader.lazyLoadImages('img[data-src]');
 </script>
 ```
 
-#### Section Lazy Loading
+#### 区块懒加载
 
 ```javascript
-// Load sections when they become visible
+// 当区块可见时加载
 lazyLoader.lazyLoadSections('[data-lazy]', (section) => {
-  // Initialize section content
+  // 初始化区块内容
   initializeSectionContent(section);
 });
 ```
 
-#### Resource Prefetching
+#### 资源预取
 
 ```javascript
-// Prefetch resources
+// 预取资源
 lazyLoader.prefetch([
   '/api/data.json',
   '/assets/images/hero.jpg'
 ], 'fetch');
 
-// Preconnect to domains
+// 预连接域名
 lazyLoader.preconnect([
   'https://api.example.com',
   'https://cdn.example.com'
 ]);
 ```
 
-#### Dynamic CSS & Script Loading
+#### 动态 CSS 和脚本加载
 
 ```javascript
-// Load CSS dynamically
+// 动态加载 CSS
 await lazyLoader.loadCSS('/assets/css/charts.css', {
   media: 'screen'
 });
 
-// Load script dynamically
+// 动态加载脚本
 await lazyLoader.loadScript('/assets/js/charts.js', {
   async: true,
   defer: true
 });
 ```
 
-### Performance Monitor (`src/assets/js/utils/performanceMonitor.js`)
+### 性能监控器 (`src/assets/js/utils/performanceMonitor.js`)
 
-Tracks and reports application performance metrics.
+追踪和报告应用性能指标。
 
-#### Initialization
+#### 初始化
 
 ```javascript
 import { performanceMonitor } from './utils/performanceMonitor.js';
 
-// Initialize with options
+// 带选项初始化
 performanceMonitor.init({
   enabled: true,
   logToConsole: true,
@@ -130,86 +130,86 @@ performanceMonitor.init({
 });
 ```
 
-#### Custom Timing
+#### 自定义计时
 
 ```javascript
-// Mark performance points
+// 标记性能点
 performanceMonitor.mark('feature-start');
-// ... feature code ...
+// ... 功能代码 ...
 performanceMonitor.mark('feature-end');
 
-// Measure duration
+// 测量持续时间
 const duration = performanceMonitor.measure(
   'feature-duration',
   'feature-start',
   'feature-end'
 );
 
-console.log(`Feature took ${duration}ms`);
+console.log(`功能耗时 ${duration}ms`);
 ```
 
-#### Simple Timer
+#### 简单计时器
 
 ```javascript
-const timer = performanceMonitor.startTimer('Database Query');
+const timer = performanceMonitor.startTimer('数据库查询');
 await database.query();
-timer.stop(); // Logs: "Timer: Database Query: 45.23ms"
+timer.stop(); // 输出: "Timer: 数据库查询: 45.23ms"
 ```
 
-#### Performance Reports
+#### 性能报告
 
 ```javascript
-// Get current metrics
+// 获取当前指标
 const metrics = performanceMonitor.getMetrics();
 
-// Generate full report
+// 生成完整报告
 const report = performanceMonitor.generateReport();
 
-// Get performance score (0-100)
+// 获取性能评分 (0-100)
 const score = performanceMonitor.getScore();
 
-// Get recommendations
+// 获取建议
 const recommendations = performanceMonitor.getRecommendations();
 ```
 
-## Lazy Loading
+## 懒加载
 
-### Why Lazy Load?
+### 为什么懒加载？
 
-Lazy loading defers loading of non-critical resources until they're needed:
+懒加载将非关键资源的加载延迟到需要时：
 
-- **Faster initial load**: Only critical resources loaded upfront
-- **Reduced bandwidth**: Don't load unused resources
-- **Better UX**: Page becomes interactive sooner
+- **更快初始加载**: 仅预先加载关键资源
+- **减少带宽**: 不加载未使用的资源
+- **更好用户体验**: 页面更快可交互
 
-### Implementation Strategies
+### 实现策略
 
-#### 1. Image Lazy Loading
+#### 1. 图片懒加载
 
 ```html
-<!-- Before -->
-<img src="large-image.jpg" alt="Large Image">
+<!-- 之前 -->
+<img src="large-image.jpg" alt="大图片">
 
-<!-- After -->
-<img data-src="large-image.jpg" alt="Large Image" class="lazy-image">
+<!-- 之后 -->
+<img data-src="large-image.jpg" alt="大图片" class="lazy-image">
 
 <script>
-// Initialize
+// 初始化
 lazyLoader.lazyLoadImages('.lazy-image');
 </script>
 ```
 
-#### 2. Module Lazy Loading
+#### 2. 模块懒加载
 
 ```javascript
-// Load heavy modules only when needed
+// 仅在需要时加载重模块
 document.getElementById('charts-button').addEventListener('click', async () => {
   const { chartsModule } = await lazyLoader.loadModule('./modules/charts.js');
   chartsModule.init();
 });
 ```
 
-#### 3. Route-based Lazy Loading
+#### 3. 基于路由的懒加载
 
 ```javascript
 const routes = {
@@ -227,44 +227,44 @@ async function loadRoute(path) {
 }
 ```
 
-## Code Splitting
+## 代码分割
 
-### Manual Code Splitting
+### 手动代码分割
 
-Split code by feature/route:
+按功能/路由分割代码：
 
 ```
 src/assets/js/
-├── app.js              # Main entry (critical path)
+├── app.js              # 主入口（关键路径）
 ├── modules/
-│   ├── core/          # Always loaded
+│   ├── core/          # 始终加载
 │   │   ├── auth.js
 │   │   └── storage.js
-│   └── lazy/          # Lazy loaded
+│   └── lazy/          # 懒加载
 │       ├── charts.js
 │       ├── analytics.js
 │       └── reports.js
 ```
 
-### Dynamic Imports
+### 动态导入
 
 ```javascript
-// Instead of static import
+// 不使用静态导入
 // import { analytics } from './modules/analytics.js';
 
-// Use dynamic import
+// 使用动态导入
 async function showAnalytics() {
   const { analytics } = await import('./modules/analytics.js');
   analytics.render();
 }
 ```
 
-### Vendor Code Splitting
+### 第三方库代码分割
 
-Separate third-party libraries:
+分离第三方库：
 
 ```javascript
-// Load Chart.js only when needed
+// 仅在需要时加载 Chart.js
 async function loadChartLibrary() {
   if (!window.Chart) {
     await lazyLoader.loadScript('https://cdn.jsdelivr.net/npm/chart.js@4');
@@ -273,22 +273,22 @@ async function loadChartLibrary() {
 }
 ```
 
-## Debouncing & Throttling
+## 防抖与节流
 
-### Debounce Utility
+### 防抖工具
 
-Delays execution until after wait time has elapsed since last call.
+延迟执行直到自上次调用后经过等待时间。
 
-**Use cases:**
-- Search input
-- Window resize
-- Form validation
-- Auto-save
+**使用场景：**
+- 搜索输入
+- 窗口调整大小
+- 表单验证
+- 自动保存
 
 ```javascript
 import { debounce } from './utils/debounce.js';
 
-// Search input debouncing
+// 搜索输入防抖
 const debouncedSearch = debounce((query) => {
   searchAPI(query);
 }, 300);
@@ -297,7 +297,7 @@ searchInput.addEventListener('input', (e) => {
   debouncedSearch(e.target.value);
 });
 
-// Auto-save debouncing
+// 自动保存防抖
 const debouncedSave = debounce(() => {
   saveToStorage();
 }, 1000);
@@ -305,27 +305,27 @@ const debouncedSave = debounce(() => {
 formInput.addEventListener('change', debouncedSave);
 ```
 
-### Throttle Utility
+### 节流工具
 
-Ensures function is called at most once per time period.
+确保函数在每个时间段内最多调用一次。
 
-**Use cases:**
-- Scroll events
-- Mouse move tracking
-- Window resize
-- Button click prevention
+**使用场景：**
+- 滚动事件
+- 鼠标移动追踪
+- 窗口调整大小
+- 按钮点击防护
 
 ```javascript
 import { throttle } from './utils/debounce.js';
 
-// Scroll event throttling
+// 滚动事件节流
 const throttledScroll = throttle(() => {
   updateScrollPosition();
 }, 100);
 
 window.addEventListener('scroll', throttledScroll);
 
-// Button click throttling
+// 按钮点击节流
 const throttledSubmit = throttle(() => {
   submitForm();
 }, 2000);
@@ -333,14 +333,14 @@ const throttledSubmit = throttle(() => {
 submitButton.addEventListener('click', throttledSubmit);
 ```
 
-### RAF Throttle
+### RAF 节流
 
-Use requestAnimationFrame for smooth animations:
+使用 requestAnimationFrame 实现流畅动画：
 
 ```javascript
 import { rafThrottle } from './utils/debounce.js';
 
-// Smooth scroll effects
+// 流畅滚动效果
 const rafScroll = rafThrottle(() => {
   updateParallaxEffect();
   updateScrollAnimations();
@@ -349,79 +349,79 @@ const rafScroll = rafThrottle(() => {
 window.addEventListener('scroll', rafScroll);
 ```
 
-### Memoization
+### 记忆化
 
-Cache expensive function results:
+缓存昂贵函数结果：
 
 ```javascript
 import { memoize } from './utils/debounce.js';
 
-// Expensive calculation
+// 昂贵计算
 const calculateBMI = memoize((weight, height) => {
-  console.log('Calculating BMI...'); // Only logs on first call
+  console.log('计算 BMI...'); // 仅在首次调用时输出
   return weight / ((height / 100) ** 2);
 });
 
-calculateBMI(75, 180); // Calculates: 23.15
-calculateBMI(75, 180); // Returns cached: 23.15 (no calculation)
+calculateBMI(75, 180); // 计算: 23.15
+calculateBMI(75, 180); // 返回缓存: 23.15（无计算）
 ```
 
-### Comparison Table
+### 对比表
 
-| Technique | When to Use | Example |
-|-----------|-------------|---------|
-| **Debounce** | Wait for pause in calls | Search input, auto-save |
-| **Throttle** | Execute at regular intervals | Scroll, resize events |
-| **RAF Throttle** | Smooth animations | Parallax, scroll effects |
-| **Memoize** | Cache expensive results | Calculations, API calls |
-| **Once** | Execute only once | Initialization |
-| **Batch** | Group multiple calls | Batch updates |
+| 技术 | 使用时机 | 示例 |
+|------|---------|------|
+| **防抖** | 等待调用暂停 | 搜索输入、自动保存 |
+| **节流** | 定期执行 | 滚动、调整大小事件 |
+| **RAF 节流** | 流畅动画 | 视差、滚动效果 |
+| **记忆化** | 缓存昂贵结果 | 计算、API 调用 |
+| **一次** | 仅执行一次 | 初始化 |
+| **批处理** | 分组多个调用 | 批量更新 |
 
-## Performance Monitoring
+## 性能监控
 
-### Real-time Monitoring
+### 实时监控
 
 ```javascript
-// Initialize monitoring
+// 初始化监控
 performanceMonitor.init({
   enabled: true,
   logToConsole: process.env.NODE_ENV === 'development',
   reportInterval: 30000
 });
 
-// Monitor custom operations
-const timer = performanceMonitor.startTimer('Data Processing');
+// 监控自定义操作
+const timer = performanceMonitor.startTimer('数据处理');
 await processLargeDataset();
 timer.stop();
 
-// Check performance score
+// 检查性能评分
 setInterval(() => {
   const score = performanceMonitor.getScore();
   if (score < 70) {
-    console.warn('Performance degradation detected');
+    console.warn('检测到性能下降');
   }
 }, 60000);
 ```
 
-### Core Web Vitals
+### 核心 Web 指标
 
-FitSpark automatically tracks:
+FitSpark 自动追踪：
 
-1. **Largest Contentful Paint (LCP)**
-   - Measures loading performance
-   - Target: < 2.5s
+1. **最大内容绘制 (LCP)**
+   - 测量加载性能
+   - 目标: < 2.5s
 
-2. **First Input Delay (FID)**
-   - Measures interactivity
-   - Target: < 100ms
+2. **首次输入延迟 (FID)**
+   - 测量交互性
+   - 目标: < 100ms
 
-3. **Cumulative Layout Shift (CLS)**
-   - Measures visual stability
-   - Target: < 0.1
+3. **累积布局偏移 (CLS)**
+   - 测量视觉稳定性
+   - 目标: < 0.1
 
-### Performance Budget
+### 性能预算
 
-Set and enforce performance budgets:
+设置并执行性能预算：
 
 ```javascript
 const BUDGET = {
@@ -431,58 +431,58 @@ const BUDGET = {
   maxMemory: 50 // MB
 };
 
-// Check against budget
+// 检查预算
 const metrics = performanceMonitor.getMetrics();
 if (metrics.memory.used > BUDGET.maxMemory) {
-  console.warn('Memory budget exceeded');
+  console.warn('超出内存预算');
 }
 ```
 
-## Best Practices
+## 最佳实践
 
-### 1. Critical Rendering Path
+### 1. 关键渲染路径
 
-**Optimize critical resources:**
+**优化关键资源：**
 
 ```html
-<!-- Inline critical CSS -->
+<!-- 内联关键 CSS -->
 <style>
-  /* Critical above-the-fold styles */
+  /* 关键的首屏样式 */
   .header { /* ... */ }
   .hero { /* ... */ }
 </style>
 
-<!-- Defer non-critical CSS -->
+<!-- 延迟非关键 CSS -->
 <link rel="preload" href="non-critical.css" as="style" onload="this.rel='stylesheet'">
 
-<!-- Defer JavaScript -->
+<!-- 延迟 JavaScript -->
 <script src="app.js" defer></script>
 ```
 
-### 2. Asset Optimization
+### 2. 资源优化
 
 ```javascript
-// Compress images
-// Use WebP format with fallback
+// 压缩图片
+// 使用 WebP 格式并提供回退
 <picture>
   <source srcset="image.webp" type="image/webp">
-  <img src="image.jpg" alt="Fallback">
+  <img src="image.jpg" alt="回退">
 </picture>
 
-// Minify CSS and JavaScript in production
-// Use gzip/brotli compression
-// Enable browser caching
+// 生产环境压缩 CSS 和 JavaScript
+// 使用 gzip/brotli 压缩
+// 启用浏览器缓存
 ```
 
-### 3. Efficient Event Handlers
+### 3. 高效事件处理器
 
 ```javascript
-// Bad: Creates new function on each render
+// 不好：每次渲染创建新函数
 elements.forEach(el => {
   el.addEventListener('click', () => handleClick(el));
 });
 
-// Good: Use event delegation
+// 好：使用事件委托
 container.addEventListener('click', (e) => {
   const target = e.target.closest('[data-action]');
   if (target) {
@@ -491,10 +491,10 @@ container.addEventListener('click', (e) => {
 });
 ```
 
-### 4. Avoid Memory Leaks
+### 4. 避免内存泄漏
 
 ```javascript
-// Always cleanup
+// 始终清理
 class Component {
   init() {
     this.handler = this.handleScroll.bind(this);
@@ -502,26 +502,26 @@ class Component {
   }
 
   destroy() {
-    // Cleanup!
+    // 清理！
     window.removeEventListener('scroll', this.handler);
     this.handler = null;
   }
 
   handleScroll() {
-    // Handle scroll
+    // 处理滚动
   }
 }
 ```
 
-### 5. Optimize Loops
+### 5. 优化循环
 
 ```javascript
-// Bad: Repeated DOM queries
+// 不好：重复 DOM 查询
 for (let i = 0; i < items.length; i++) {
   document.querySelector('.container').appendChild(items[i]);
 }
 
-// Good: Cache DOM reference, batch updates
+// 好：缓存 DOM 引用，批量更新
 const container = document.querySelector('.container');
 const fragment = document.createDocumentFragment();
 
@@ -532,9 +532,9 @@ for (let i = 0; i < items.length; i++) {
 container.appendChild(fragment);
 ```
 
-### 6. Use Web Workers
+### 6. 使用 Web Workers
 
-For CPU-intensive tasks:
+对于 CPU 密集型任务：
 
 ```javascript
 // worker.js
@@ -547,154 +547,154 @@ self.addEventListener('message', (e) => {
 const worker = new Worker('worker.js');
 worker.postMessage(data);
 worker.addEventListener('message', (e) => {
-  console.log('Result:', e.data);
+  console.log('结果:', e.data);
 });
 ```
 
-## Optimization Checklist
+## 优化清单
 
-### Initial Load Optimization
+### 初始加载优化
 
-- [ ] Minimize critical CSS (< 14KB)
-- [ ] Defer non-critical JavaScript
-- [ ] Lazy load images
-- [ ] Enable text compression (gzip/brotli)
-- [ ] Use HTTP/2
-- [ ] Implement service worker caching
-- [ ] Optimize font loading
-- [ ] Remove unused CSS/JS
+- [ ] 最小化关键 CSS (< 14KB)
+- [ ] 延迟非关键 JavaScript
+- [ ] 懒加载图片
+- [ ] 启用文本压缩 (gzip/brotli)
+- [ ] 使用 HTTP/2
+- [ ] 实现 Service Worker 缓存
+- [ ] 优化字体加载
+- [ ] 删除未使用的 CSS/JS
 
-### Runtime Optimization
+### 运行时优化
 
-- [ ] Debounce search inputs
-- [ ] Throttle scroll/resize events
-- [ ] Use RAF for animations
-- [ ] Implement virtual scrolling for long lists
-- [ ] Memoize expensive calculations
-- [ ] Use event delegation
-- [ ] Cleanup event listeners
-- [ ] Optimize image sizes
+- [ ] 搜索输入防抖
+- [ ] 滚动/调整大小事件节流
+- [ ] 动画使用 RAF
+- [ ] 长列表实现虚拟滚动
+- [ ] 记忆化昂贵计算
+- [ ] 使用事件委托
+- [ ] 清理事件监听器
+- [ ] 优化图片尺寸
 
-### Memory Optimization
+### 内存优化
 
-- [ ] Remove event listeners on destroy
-- [ ] Clear intervals/timeouts
-- [ ] Nullify references
-- [ ] Limit cache size
-- [ ] Use WeakMap for object associations
-- [ ] Monitor memory usage
+- [ ] 销毁时删除事件监听器
+- [ ] 清除定时器/超时
+- [ ] 释放引用
+- [ ] 限制缓存大小
+- [ ] 对象关联使用 WeakMap
+- [ ] 监控内存使用
 
-### Network Optimization
+### 网络优化
 
-- [ ] Bundle and minify assets
-- [ ] Use CDN for static assets
-- [ ] Implement resource hints (preload, prefetch)
-- [ ] Enable caching headers
-- [ ] Compress API responses
-- [ ] Batch API requests
+- [ ] 打包和压缩资源
+- [ ] 静态资源使用 CDN
+- [ ] 实现资源提示 (preload, prefetch)
+- [ ] 启用缓存头
+- [ ] 压缩 API 响应
+- [ ] 批量 API 请求
 
-## Troubleshooting
+## 故障排查
 
-### Slow Page Load
+### 页面加载慢
 
-**Diagnosis:**
+**诊断：**
 ```javascript
 const report = performanceMonitor.generateReport();
 console.log('FCP:', report.paint.firstContentfulPaint);
 
-// Check slow resources
+// 检查慢资源
 const slowResources = report.moduleLoads.filter(m => m.duration > 1000);
 ```
 
-**Solutions:**
-- Lazy load non-critical modules
-- Optimize images
-- Defer third-party scripts
-- Enable caching
+**解决方案：**
+- 懒加载非关键模块
+- 优化图片
+- 延迟第三方脚本
+- 启用缓存
 
-### High Memory Usage
+### 内存使用高
 
-**Diagnosis:**
+**诊断：**
 ```javascript
 performanceMonitor.captureMemoryUsage();
 const metrics = performanceMonitor.getMetrics();
-console.log('Memory:', metrics.memory);
+console.log('内存:', metrics.memory);
 ```
 
-**Solutions:**
-- Check for memory leaks (use Chrome DevTools heap snapshot)
-- Clean up event listeners
-- Limit cache size
-- Use WeakMap for caches
+**解决方案：**
+- 检查内存泄漏（使用 Chrome DevTools 堆快照）
+- 清理事件监听器
+- 限制缓存大小
+- 缓存使用 WeakMap
 
-### Janky Scrolling
+### 滚动卡顿
 
-**Diagnosis:**
+**诊断：**
 ```javascript
-// Check for long tasks and layout shifts
-// Use Chrome DevTools Performance tab
+// 检查长任务和布局偏移
+// 使用 Chrome DevTools Performance 选项卡
 ```
 
-**Solutions:**
+**解决方案：**
 ```javascript
-// Throttle scroll handlers
+// 节流滚动处理器
 const optimizedScroll = rafThrottle(() => {
   updateUI();
 });
 
-// Avoid forced synchronous layouts
-// Bad: Causes reflow in loop
+// 避免强制同步布局
+// 不好：循环中导致重排
 elements.forEach(el => {
-  el.style.width = el.offsetWidth + 10 + 'px'; // Read then write
+  el.style.width = el.offsetWidth + 10 + 'px'; // 先读后写
 });
 
-// Good: Batch reads and writes
+// 好：批量读写
 const widths = elements.map(el => el.offsetWidth);
 elements.forEach((el, i) => {
   el.style.width = widths[i] + 10 + 'px';
 });
 ```
 
-### Slow Interactions
+### 交互慢
 
-**Diagnosis:**
+**诊断：**
 ```javascript
-// Monitor First Input Delay
-// Check console for "Slow FID Warning"
+// 监控首次输入延迟
+// 检查控制台 "Slow FID Warning"
 ```
 
-**Solutions:**
-- Break up long tasks
-- Use web workers for heavy computation
-- Defer non-critical code
-- Optimize event handlers
+**解决方案：**
+- 拆分长任务
+- 重计算使用 Web Workers
+- 延迟非关键代码
+- 优化事件处理器
 
-## Performance Testing
+## 性能测试
 
 ### Lighthouse
 
 ```bash
-# Run Lighthouse audit
+# 运行 Lighthouse 审计
 npx lighthouse http://localhost:3000 --view
 
-# Target scores:
-# Performance: > 90
-# Accessibility: > 90
-# Best Practices: > 90
+# 目标评分：
+# 性能: > 90
+# 可访问性: > 90
+# 最佳实践: > 90
 # SEO: > 90
 ```
 
 ### Chrome DevTools
 
-1. **Performance Tab**: Record runtime performance
-2. **Network Tab**: Check resource loading
-3. **Memory Tab**: Find memory leaks
-4. **Lighthouse Tab**: Run audits
+1. **Performance 选项卡**: 记录运行时性能
+2. **Network 选项卡**: 检查资源加载
+3. **Memory 选项卡**: 查找内存泄漏
+4. **Lighthouse 选项卡**: 运行审计
 
-### Automated Testing
+### 自动化测试
 
 ```javascript
-// Add performance tests
+// 添加性能测试
 describe('Performance', () => {
   it('should load in < 2s', async () => {
     const start = Date.now();
@@ -710,28 +710,28 @@ describe('Performance', () => {
 });
 ```
 
-## Resources
+## 资源
 
-- [Web.dev Performance](https://web.dev/performance/)
-- [MDN Performance](https://developer.mozilla.org/en-US/docs/Web/Performance)
+- [Web.dev 性能](https://web.dev/performance/)
+- [MDN 性能](https://developer.mozilla.org/zh-CN/docs/Web/Performance)
 - [Chrome DevTools](https://developer.chrome.com/docs/devtools/)
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 
-## Summary
+## 总结
 
-FitSpark implements comprehensive performance optimization through:
+FitSpark 通过以下方式实现全面性能优化：
 
-✅ **Lazy loading** for on-demand resource loading
-✅ **Code splitting** for smaller initial bundles
-✅ **Debouncing/throttling** for efficient event handling
-✅ **Performance monitoring** for continuous optimization
-✅ **Best practices** for maintainable performance
+- **懒加载** 按需资源加载
+- **代码分割** 更小的初始包
+- **防抖/节流** 高效事件处理
+- **性能监控** 持续优化
+- **最佳实践** 可维护的性能
 
-Target: **Performance Score > 90/100**
+目标：**性能评分 > 90/100**
 
 ---
 
-For questions or performance issues, run:
+如有性能问题，运行：
 ```javascript
 performanceMonitor.generateReport();
 performanceMonitor.getRecommendations();
